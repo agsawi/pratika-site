@@ -5,12 +5,19 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --font-sans: 'Merriweather', 'sans-serif';
+  --font-serif: 'Open Sans', 'serif';
   /* https://tailwindcss.com/docs/colors#customizing-your-colors */
   --color-*: initial;
   --color-transparent: transparent;
   --color-current: currentColor;
   --color-black: #000;
   --color-white: #fff;
+
+  --color-primary: #18204e;
+  --color-secondary: #064f94;
+  --color-neutral: #FFFFFF;
+  --color-neutral-alt: #23bdc5;
 
   --color-gray-50: oklch(0.985 0.002 247.839);
   --color-gray-100: oklch(0.967 0.003 264.542);
@@ -118,4 +125,8 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+}
+
+body {
+  @apply font-serif;
 }

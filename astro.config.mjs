@@ -127,6 +127,21 @@ export default defineConfig({
     clientPrerender: true,
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss({
+        config: {
+          theme: {
+            extend: {
+              colors: {
+                primary: 'var(--color-primary)',
+                secondary: 'var(--color-secondary)',
+                neutral: 'var(--color-neutral)',
+                'neutral-alt': 'var(--color-neutral-alt)',
+              },
+            },
+          },
+        },
+      }),
+    ],
   },
 });
