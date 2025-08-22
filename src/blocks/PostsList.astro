@@ -1,0 +1,13 @@
+---
+import { getPostSlugs } from "@/lib/cms";
+const posts = await getPostSlugs();
+---
+<section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+  <h2 class="mb-6 text-2xl font-bold">Recent Posts</h2>
+  <ul class="list-disc pl-6">
+    {Array.isArray(posts) && posts.map((p: any) => (
+      <li><a href={`/blog/${p.slug}`}>{p.slug}</a></li>
+    ))}
+  </ul>
+</section>
+

@@ -1,0 +1,27 @@
+---
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  text?: string;
+  image?: string; // Directus file ID
+  cta_label?: string;
+  cta_url?: string;
+}
+const { eyebrow, heading, text, image, cta_label, cta_url } = Astro.props as Props;
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL as string;
+const imageUrl = image ? `${DIRECTUS_URL}/assets/${image}` : undefined;
+---
+<section class="mx-auto max-w-[85rem] px-4 py-16 sm:px-6 lg:px-8">
+  {eyebrow && <p class="mb-2 text-sm text-neutral-500">{eyebrow}</p>}
+  {heading && <h1 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">{heading}</h1>}
+  {text && <p class="mt-4 max-w-3xl text-lg text-neutral-600 dark:text-neutral-300">{text}</p>}
+  {imageUrl && <img src={imageUrl} alt={heading ?? ''} class="mt-6 max-w-full rounded-xl" loading="lazy" />}
+  {cta_label && cta_url && (
+    <p class="mt-6">
+      <a href={cta_url} class="inline-flex items-center gap-2 rounded-lg bg-neutral-900 px-5 py-3 text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900">
+        {cta_label}
+      </a>
+    </p>
+  )}
+</section>
+

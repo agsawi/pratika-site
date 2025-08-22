@@ -1,0 +1,17 @@
+---
+interface GridItem { title?: string; text?: string; icon?: string }
+interface Props { columns?: number; items?: GridItem[] }
+const { columns = 3, items = [] } = Astro.props as Props;
+---
+<section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+  <div class={`grid gap-6 sm:grid-cols-2 lg:grid-cols-${columns}`.replace(/lg:grid-cols-(\d+)/, `lg:grid-cols-${columns}`)}>
+    {items.map((it) => (
+      <div class="rounded-xl border border-neutral-200 p-6 dark:border-neutral-800">
+        {it.icon && <div class="mb-3 text-2xl">{it.icon}</div>}
+        {it.title && <h3 class="mb-2 text-lg font-semibold text-neutral-900 dark:text-neutral-100">{it.title}</h3>}
+        {it.text && <p class="text-neutral-600 dark:text-neutral-300">{it.text}</p>}
+      </div>
+    ))}
+  </div>
+</section>
+

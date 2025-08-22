@@ -1,0 +1,48 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { registry } from "@/blocks/registry";
+import { getAllPageSlugs, getPageBySlug } from "@/lib/cms";
+import { buildTitle, buildDescription } from "@/lib/seo";
+
+export async function getStaticPaths() {
+  try {
+    const slugs = await getAllPageSlugs();
+    const unique = Array.from(new Set(['/'].concat(slugs)));
+    return unique.map((s) => ({ params: { slug: s === '/' ? undefined : s.replace(/^\//, '') } }));
+  } catch {
+    return [{ params: { slug: undefined } }];
+  }
+}
+
+const segments = Astro.params.slug ?? '';
+const slug = '/' + String(segments);
+const draft = Astro.url.searchParams.has("preview");
+
+let page: any = null;
+try {
+  page = await getPageBySlug(slug || "/", { draft });
+} catch {
+  page = null;
+}
+
+---
+<MainLayout title={buildTitle(page?.seo_title ?? page?.title)} customDescription={buildDescription(page?.seo_description)}>
+  {page ? (
+    <>
+      {(page.blocks ?? []).sort((a: any, b: any) => (a.sort ?? 0) - (b.sort ?? 0)).map((row: any) => {
+        const C = (registry as any)[row.type];
+        const props =
+          row.type === 'hero' ? row.hero :
+          row.type === 'rich_text' ? row.rich_text :
+          row.type === 'grid' ? row.grid :
+          row.type === 'cta' ? row.cta : row;
+        return C ? <C {...props} /> : null;
+      })}
+    </>
+  ) : (
+    <section class="mx-auto max-w-[85rem] px-4 py-20 text-center sm:px-6 lg:px-8">
+      <h1 class="text-2xl font-semibold">Welcome</h1>
+      <p class="mt-2 text-neutral-600 dark:text-neutral-300">Connect Directus to render this page.</p>
+    </section>
+  )}
+</MainLayout>

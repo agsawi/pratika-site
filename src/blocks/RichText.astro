@@ -1,0 +1,8 @@
+---
+interface Props { body?: string }
+const { body } = Astro.props as Props;
+---
+<section class="prose max-w-none dark:prose-invert">
+  {body && <div set:html={body} />}
+</section>
+
