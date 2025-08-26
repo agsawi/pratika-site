@@ -1,0 +1,88 @@
+---
+// Test component to verify visual customization system is working
+import { getConfig, getBrandColors, getUIColors } from '../utils/visual-system/config-helpers';
+
+const config = getConfig();
+const brandColors = getBrandColors();
+const uiColors = getUIColors();
+---
+
+<div class="p-8 space-y-6">
+  <h2 class="text-2xl font-bold text-text">Visual Customization System Test</h2>
+  
+  <!-- Brand Colors Test -->
+  <div class="space-y-4">
+    <h3 class="text-lg font-semibold text-text">Brand Colors</h3>
+    <div class="flex gap-4">
+      <div class="bg-primary text-white p-4 rounded-lg">
+        <p class="font-medium">Primary</p>
+        <p class="text-sm opacity-90">{brandColors.primary}</p>
+      </div>
+      <div class="bg-secondary text-white p-4 rounded-lg">
+        <p class="font-medium">Secondary</p>
+        <p class="text-sm opacity-90">{brandColors.secondary}</p>
+      </div>
+      <div class="bg-accent text-white p-4 rounded-lg">
+        <p class="font-medium">Accent</p>
+        <p class="text-sm opacity-90">{brandColors.accent}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- UI Colors Test -->
+  <div class="space-y-4">
+    <h3 class="text-lg font-semibold text-text">UI Colors</h3>
+    <div class="bg-surface border border-border rounded-lg p-4 space-y-2">
+      <p class="text-text">Primary text color</p>
+      <p class="text-text-muted">Muted text color</p>
+      <div class="flex gap-2 mt-4">
+        <span class="bg-success text-white px-3 py-1 rounded text-sm">Success</span>
+        <span class="bg-warning text-white px-3 py-1 rounded text-sm">Warning</span>
+        <span class="bg-error text-white px-3 py-1 rounded text-sm">Error</span>
+        <span class="bg-info text-white px-3 py-1 rounded text-sm">Info</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography Test -->
+  <div class="space-y-4">
+    <h3 class="text-lg font-semibold text-text">Typography</h3>
+    <div class="space-y-2">
+      <p class="font-sans text-text">Sans-serif font: {config.typography.fontFamilies.sans.join(', ')}</p>
+      <p class="font-serif text-text">Serif font: {config.typography.fontFamilies.serif.join(', ')}</p>
+      <p class="font-mono text-text">Monospace font: {config.typography.fontFamilies.mono.join(', ')}</p>
+    </div>
+  </div>
+
+  <!-- Spacing and Border Radius Test -->
+  <div class="space-y-4">
+    <h3 class="text-lg font-semibold text-text">Design Tokens</h3>
+    <div class="flex gap-4">
+      <div class="bg-surface border border-border p-4 rounded-sm">
+        <p class="text-sm text-text-muted">Small radius</p>
+      </div>
+      <div class="bg-surface border border-border p-4 rounded-md">
+        <p class="text-sm text-text-muted">Medium radius</p>
+      </div>
+      <div class="bg-surface border border-border p-4 rounded-lg">
+        <p class="text-sm text-text-muted">Large radius</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shadow Test -->
+  <div class="space-y-4">
+    <h3 class="text-lg font-semibold text-text">Shadows</h3>
+    <div class="flex gap-4">
+      <div class="bg-surface p-4 rounded-lg shadow-sm">
+        <p class="text-sm text-text-muted">Small shadow</p>
+      </div>
+      <div class="bg-surface p-4 rounded-lg shadow-md">
+        <p class="text-sm text-text-muted">Medium shadow</p>
+      </div>
+      <div class="bg-surface p-4 rounded-lg shadow-lg">
+        <p class="text-sm text-text-muted">Large shadow</p>
+      </div>
+    </div>
+  </div>
+</div>

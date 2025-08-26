@@ -1,0 +1,201 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { SITE } from "../data_files/constants";
+---
+
+<MainLayout title={`Theme Test | ${SITE.title}`}>
+  <main class="mx-auto max-w-4xl px-4 py-16">
+    <div class="space-y-8">
+      <!-- Header -->
+      <div class="text-center">
+        <h1 class="text-4xl font-bold text-text mb-4">Dark Theme Test Page</h1>
+        <p class="text-lg text-text-muted">
+          Testing custom colors and dark theme integration with Preline UI components
+        </p>
+      </div>
+
+      <!-- Color Palette Display -->
+      <section class="bg-surface rounded-lg p-6 border border-border">
+        <h2 class="text-2xl font-semibold text-text mb-4">Custom Color Palette</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <!-- Brand Colors -->
+          <div class="space-y-2">
+            <h3 class="font-medium text-text">Brand Colors</h3>
+            <div class="bg-primary h-16 rounded flex items-center justify-center text-white font-medium">
+              Primary
+            </div>
+            <div class="bg-secondary h-16 rounded flex items-center justify-center text-white font-medium">
+              Secondary
+            </div>
+            <div class="bg-accent h-16 rounded flex items-center justify-center text-white font-medium">
+              Accent
+            </div>
+          </div>
+
+          <!-- UI Colors -->
+          <div class="space-y-2">
+            <h3 class="font-medium text-text">UI Colors</h3>
+            <div class="bg-background border border-border h-16 rounded flex items-center justify-center text-text font-medium">
+              Background
+            </div>
+            <div class="bg-surface border border-border h-16 rounded flex items-center justify-center text-text font-medium">
+              Surface
+            </div>
+            <div class="bg-border h-16 rounded flex items-center justify-center text-text font-medium">
+              Border
+            </div>
+          </div>
+
+          <!-- Semantic Colors -->
+          <div class="space-y-2">
+            <h3 class="font-medium text-text">Semantic Colors</h3>
+            <div class="bg-success h-12 rounded flex items-center justify-center text-white font-medium text-sm">
+              Success
+            </div>
+            <div class="bg-warning h-12 rounded flex items-center justify-center text-white font-medium text-sm">
+              Warning
+            </div>
+            <div class="bg-error h-12 rounded flex items-center justify-center text-white font-medium text-sm">
+              Error
+            </div>
+            <div class="bg-info h-12 rounded flex items-center justify-center text-white font-medium text-sm">
+              Info
+            </div>
+          </div>
+
+          <!-- Text Colors -->
+          <div class="space-y-2">
+            <h3 class="font-medium text-text">Text Colors</h3>
+            <div class="bg-surface border border-border h-16 rounded flex flex-col items-center justify-center">
+              <span class="text-text font-medium">Primary Text</span>
+              <span class="text-text-muted text-sm">Muted Text</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Preline UI Components Test -->
+      <section class="bg-surface rounded-lg p-6 border border-border">
+        <h2 class="text-2xl font-semibold text-text mb-4">Preline UI Components</h2>
+        
+        <!-- Buttons -->
+        <div class="space-y-4">
+          <div>
+            <h3 class="font-medium text-text mb-2">Buttons</h3>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-primary text-white hover:bg-primary/80 disabled:opacity-50 disabled:pointer-events-none">
+                Primary Button
+              </button>
+              <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-border text-text hover:bg-surface disabled:opacity-50 disabled:pointer-events-none">
+                Secondary Button
+              </button>
+              <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-success text-white hover:bg-success/80 disabled:opacity-50 disabled:pointer-events-none">
+                Success Button
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Elements -->
+          <div>
+            <h3 class="font-medium text-text mb-2">Form Elements</h3>
+            <div class="space-y-3">
+              <div>
+                <label for="test-input" class="block text-sm font-medium text-text mb-1">Test Input</label>
+                <input type="text" id="test-input" class="py-2 px-3 block w-full border border-border rounded-lg text-sm text-text bg-background focus:border-primary focus:ring-primary disabled:opacity-50 disabled:pointer-events-none" placeholder="Enter some text">
+              </div>
+              <div>
+                <label for="test-select" class="block text-sm font-medium text-text mb-1">Test Select</label>
+                <select id="test-select" class="py-2 px-3 pe-9 block w-full border border-border rounded-lg text-sm text-text bg-background focus:border-primary focus:ring-primary disabled:opacity-50 disabled:pointer-events-none">
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cards -->
+          <div>
+            <h3 class="font-medium text-text mb-2">Cards</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-background border border-border rounded-lg p-4">
+                <h4 class="font-semibold text-text mb-2">Card Title</h4>
+                <p class="text-text-muted text-sm mb-3">This is a sample card with custom colors applied.</p>
+                <button type="button" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-transparent bg-primary text-white hover:bg-primary/80">
+                  Action
+                </button>
+              </div>
+              <div class="bg-background border border-border rounded-lg p-4">
+                <h4 class="font-semibold text-text mb-2">Another Card</h4>
+                <p class="text-text-muted text-sm mb-3">Testing how cards look with the custom color system.</p>
+                <button type="button" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-border text-text hover:bg-surface">
+                  Secondary Action
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alert Components -->
+          <div>
+            <h3 class="font-medium text-text mb-2">Alert Components</h3>
+            <div class="space-y-2">
+              <div class="bg-success/10 border border-success/20 text-success rounded-lg p-3" role="alert">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <svg class="h-4 w-4 text-success mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.061L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                    </svg>
+                  </div>
+                  <div class="ms-3">
+                    <h3 class="text-sm font-medium">Success Alert</h3>
+                    <p class="text-sm text-success/80 mt-1">This is a success message using custom colors.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-warning/10 border border-warning/20 text-warning rounded-lg p-3" role="alert">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <svg class="h-4 w-4 text-warning mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                  </div>
+                  <div class="ms-3">
+                    <h3 class="text-sm font-medium">Warning Alert</h3>
+                    <p class="text-sm text-warning/80 mt-1">This is a warning message using custom colors.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Theme Toggle Instructions -->
+      <section class="bg-surface rounded-lg p-6 border border-border">
+        <h2 class="text-2xl font-semibold text-text mb-4">Theme Testing Instructions</h2>
+        <div class="space-y-3 text-text-muted">
+          <p>1. Use the theme toggle button in the navigation bar to switch between light and dark modes.</p>
+          <p>2. Observe how all custom colors automatically adjust for optimal contrast and readability.</p>
+          <p>3. Notice that brand colors become slightly brighter in dark mode while maintaining brand identity.</p>
+          <p>4. Check that all Preline UI components work seamlessly with the custom color system.</p>
+          <p>5. Verify that the theme preference is saved and persists across page reloads.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  // Simple theme change logging for testing
+  document.addEventListener('DOMContentLoaded', () => {
+    // Log theme changes for debugging
+    window.addEventListener('on-hs-appearance-change', (e: any) => {
+      console.log('Theme changed to:', e.detail);
+    });
+    
+    // Log initial theme
+    const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    console.log('Initial theme:', currentTheme);
+  });
+</script>
