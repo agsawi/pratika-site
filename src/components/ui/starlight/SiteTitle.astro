@@ -1,8 +1,7 @@
 ---
-import mainLogo from "@images/starlight/screwfast_logo_dark.svg?raw";
-import docsLogo from "@images/starlight/docs_logo.svg?raw";
+import pratikaLogoDark from "@images/logo_pratika_facilities_fundo_escuro_transparente.svg?raw";
+import pratikaLogoLight from "@images/logo_pratika_facilities_fundo_claro_transparente.svg?raw";
 import type { Props } from "@astrojs/starlight/props";
-
 
 const main = "/";
 const locale = Astro.props.locale ? Astro.props.locale + "/" : "";
@@ -10,9 +9,30 @@ const docs = "/" + locale + "welcome-to-docs/";
 ---
 
 <span class="site-title flex">
-  <a class="main-logo" href={main} set:html={mainLogo} aria-label="ScrewFast" />
-  <a class="docs-logo" href={docs} set:html={docsLogo} aria-label="ScrewFast Docs" />
+  <!-- Light mode: use white background logo -->
+  <a class="main-logo block dark:hidden" href={main} aria-label="Pratika Facilities">
+    <div class="h-12 w-auto" set:html={pratikaLogoLight}></div>
+  </a>
+  <!-- Dark mode: use dark blue background logo -->
+  <a class="main-logo hidden dark:block" href={main} aria-label="Pratika Facilities">
+    <div class="h-12 w-auto" set:html={pratikaLogoDark}></div>
+  </a>
+  <!-- Docs link with appropriate logo variant -->
+  <a class="docs-logo block dark:hidden" href={docs} aria-label="Pratika Facilities Docs">
+    <div class="h-10 w-auto" set:html={pratikaLogoLight}></div>
+  </a>
+  <a class="docs-logo hidden dark:block" href={docs} aria-label="Pratika Facilities Docs">
+    <div class="h-10 w-auto" set:html={pratikaLogoDark}></div>
+  </a>
 </span>
+
+<style>
+  /* Ensure SVG elements inherit the container size */
+  .site-title :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+</style>
 
 <style>
   .site-title {

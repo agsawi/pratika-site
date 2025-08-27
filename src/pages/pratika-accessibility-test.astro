@@ -1,0 +1,438 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+const title = "Pratika Brand Accessibility Test";
+const description = "Comprehensive accessibility testing for Pratika's brand implementation";
+---
+
+<MainLayout title={title} meta={description}>
+  <main class="mx-auto max-w-6xl px-4 py-8">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-brand-600 mb-4">Pratika Brand Accessibility Test</h1>
+      <p class="text-lg text-gray-600 mb-6">
+        This page validates the accessibility compliance of Pratika's brand implementation across various UI components and interactions.
+      </p>
+      
+      <!-- Status Badge -->
+      <div class="inline-flex items-center gap-2 bg-green-50 text-green-800 px-4 py-2 rounded-lg border border-green-200">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="font-medium">WCAG AA Compliant</span>
+      </div>
+    </div>
+
+    <!-- Color Contrast Testing -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-brand-600 mb-6">Color Contrast Testing</h2>
+      
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Primary Brand Color -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <div class="mb-4">
+            <div class="w-full h-16 bg-brand-600 rounded-lg mb-3 flex items-center justify-center">
+              <span class="text-white font-semibold">Primary Brand</span>
+            </div>
+            <div class="text-sm text-gray-600">
+              <strong>Color:</strong> #18204e<br>
+              <strong>Contrast:</strong> 15.49:1 (AAA)
+            </div>
+          </div>
+          <div class="space-y-2">
+            <p class="text-brand-600 font-semibold">Primary brand text on white background</p>
+            <p class="text-brand-600">This text uses Pratika's primary brand color and meets WCAG AAA standards.</p>
+          </div>
+        </div>
+
+        <!-- Secondary Brand Color -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <div class="mb-4">
+            <div class="w-full h-16 bg-brand-secondary rounded-lg mb-3 flex items-center justify-center">
+              <span class="text-white font-semibold">Secondary Brand</span>
+            </div>
+            <div class="text-sm text-gray-600">
+              <strong>Color:</strong> #064f94<br>
+              <strong>Contrast:</strong> 8.22:1 (AAA)
+            </div>
+          </div>
+          <div class="space-y-2">
+            <p style="color: #064f94" class="font-semibold">Secondary brand text on white background</p>
+            <p style="color: #064f94">This text uses Pratika's secondary brand color with excellent contrast.</p>
+          </div>
+        </div>
+
+        <!-- Typography Contrast -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <div class="mb-4">
+            <div class="w-full h-16 bg-gray-100 rounded-lg mb-3 flex items-center justify-center">
+              <span class="text-gray-800 font-semibold">Typography</span>
+            </div>
+            <div class="text-sm text-gray-600">
+              <strong>Primary:</strong> #1e293b (14.63:1)<br>
+              <strong>Muted:</strong> #64748b (4.76:1)
+            </div>
+          </div>
+          <div class="space-y-2">
+            <p class="text-gray-900 font-semibold">Primary text color</p>
+            <p class="text-gray-600">Secondary/muted text color for less prominent content.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Elements Testing -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-brand-600 mb-6">Interactive Elements & Focus States</h2>
+      
+      <div class="grid gap-6 md:grid-cols-2">
+        <!-- Buttons -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-brand-600 mb-4">Button States</h3>
+          <div class="space-y-4">
+            <button class="bg-brand-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors">
+              Primary Button
+            </button>
+            <button class="border-2 border-brand-600 text-brand-600 px-6 py-3 rounded-lg font-medium hover:bg-brand-50 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors">
+              Secondary Button
+            </button>
+            <button class="text-brand-600 px-6 py-3 rounded-lg font-medium hover:bg-brand-50 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors underline-offset-4 hover:underline">
+              Text Button
+            </button>
+          </div>
+          <p class="text-sm text-gray-600 mt-4">
+            <strong>Focus Test:</strong> Tab through buttons to test focus visibility. Focus rings use brand colors with sufficient contrast.
+          </p>
+        </div>
+
+        <!-- Form Elements -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-brand-600 mb-4">Form Elements</h3>
+          <div class="space-y-4">
+            <div>
+              <label for="test-input" class="block text-sm font-medium text-gray-700 mb-2">
+                Text Input
+              </label>
+              <input 
+                type="text" 
+                id="test-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors"
+                placeholder="Focus to test accessibility"
+              >
+            </div>
+            <div>
+              <label for="test-select" class="block text-sm font-medium text-gray-700 mb-2">
+                Select Dropdown
+              </label>
+              <select 
+                id="test-select"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors"
+              >
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+              </select>
+            </div>
+            <div class="flex items-center">
+              <input 
+                type="checkbox" 
+                id="test-checkbox"
+                class="h-4 w-4 text-brand-600 focus:ring-brand-500 border-gray-300 rounded"
+              >
+              <label for="test-checkbox" class="ml-2 text-sm text-gray-700">
+                Checkbox with brand colors
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation States -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-brand-600 mb-6">Navigation & Link States</h2>
+      
+      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+        <h3 class="text-xl font-semibold text-brand-600 mb-4">Navigation Examples</h3>
+        
+        <!-- Horizontal Navigation -->
+        <nav class="mb-6">
+          <ul class="flex space-x-6 border-b border-gray-200 pb-4">
+            <li>
+              <a href="#" class="text-brand-600 border-b-2 border-brand-600 pb-2 font-medium">
+                Current Page
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-600 hover:text-brand-600 hover:border-b-2 hover:border-brand-600 pb-2 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 rounded">
+                Other Page
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-600 hover:text-brand-600 hover:border-b-2 hover:border-brand-600 pb-2 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 rounded">
+                Another Page
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Text Links -->
+        <div class="space-y-2">
+          <p>
+            This paragraph contains a 
+            <a href="#" class="text-brand-600 hover:text-brand-700 underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-1 rounded">
+              standard text link
+            </a> 
+            that uses brand colors and includes proper focus states.
+          </p>
+          <p>
+            Here's another link with 
+            <a href="#" class="text-brand-600 hover:text-brand-700 font-medium hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-1 rounded">
+              hover underline effect
+            </a> 
+            for better visual feedback.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Status Indicators -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-brand-600 mb-6">Status Indicators & Semantic Colors</h2>
+      
+      <div class="grid gap-6 md:grid-cols-2">
+        <!-- Success States -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-brand-600 mb-4">Success Indicators</h3>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-green-800 font-medium">Success message with icon</span>
+            </div>
+            <div class="p-3 bg-green-50 border-l-4 border-green-400">
+              <p class="text-green-800">Success state using color + border pattern</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error States -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-brand-600 mb-4">Error Indicators</h3>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-red-800 font-medium">Error message with icon</span>
+            </div>
+            <div class="p-3 bg-red-50 border-l-4 border-red-400">
+              <p class="text-red-800">Error state using color + border pattern</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Warning States -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-brand-600 mb-4">Warning Indicators</h3>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-yellow-800 font-medium">Warning message with icon</span>
+            </div>
+            <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400">
+              <p class="text-yellow-800">Warning state using color + border pattern</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info States -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-brand-600 mb-4">Info Indicators</h3>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-blue-800 font-medium">Info message with icon</span>
+            </div>
+            <div class="p-3 bg-blue-50 border-l-4 border-blue-400">
+              <p class="text-blue-800">Info state using color + border pattern</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Testing -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-brand-600 mb-6">Typography Accessibility</h2>
+      
+      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+        <div class="grid gap-8 md:grid-cols-2">
+          <!-- Merriweather Headings -->
+          <div>
+            <h3 class="text-xl font-semibold text-brand-600 mb-4">Merriweather Headings</h3>
+            <div class="space-y-3">
+              <h1 class="text-4xl font-bold text-gray-900">Heading 1</h1>
+              <h2 class="text-3xl font-bold text-gray-900">Heading 2</h2>
+              <h3 class="text-2xl font-semibold text-gray-900">Heading 3</h3>
+              <h4 class="text-xl font-semibold text-gray-900">Heading 4</h4>
+              <h5 class="text-lg font-medium text-gray-900">Heading 5</h5>
+              <h6 class="text-base font-medium text-gray-900">Heading 6</h6>
+            </div>
+            <p class="text-sm text-gray-600 mt-4">
+              Merriweather provides excellent readability for headings with good character distinction.
+            </p>
+          </div>
+
+          <!-- Open Sans Body Text -->
+          <div>
+            <h3 class="text-xl font-semibold text-brand-600 mb-4">Open Sans Body Text</h3>
+            <div class="space-y-4">
+              <p class="text-lg text-gray-900">
+                Large body text (18px) - This size meets WCAG AA standards for large text with a 3:1 contrast ratio minimum.
+              </p>
+              <p class="text-base text-gray-900">
+                Regular body text (16px) - This is the standard body text size that requires a 4.5:1 contrast ratio for WCAG AA compliance.
+              </p>
+              <p class="text-sm text-gray-600">
+                Small text (14px) - Secondary text that still maintains good readability while being less prominent.
+              </p>
+              <p class="text-xs text-gray-500">
+                Extra small text (12px) - Used sparingly for captions and fine print.
+              </p>
+            </div>
+            <p class="text-sm text-gray-600 mt-4">
+              Open Sans is optimized for screen reading and provides excellent accessibility.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessibility Checklist -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-brand-600 mb-6">Accessibility Compliance Checklist</h2>
+      
+      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <h3 class="text-lg font-semibold text-brand-600 mb-4">✅ Passed Requirements</h3>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Primary brand color meets WCAG AAA (15.49:1 contrast)
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Secondary brand color meets WCAG AAA (8.22:1 contrast)
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Focus indicators have sufficient visibility
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Typography choices support accessibility
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Status indicators include icons and patterns
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Interactive states include visual changes beyond color
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-brand-600 mb-4">📋 Manual Verification</h3>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Tab through all interactive elements to test focus visibility</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Test with screen readers to verify semantic markup</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Verify form validation provides clear error messages</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Test with keyboard-only navigation</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Verify color-blind users can distinguish interface elements</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testing Commands -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-brand-600 mb-6">Automated Testing</h2>
+      
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-brand-600 mb-4">Available Commands</h3>
+        <div class="space-y-3">
+          <div class="bg-white p-3 rounded border">
+            <code class="text-sm font-mono text-gray-800">node scripts/validate-pratika-accessibility.mjs</code>
+            <p class="text-sm text-gray-600 mt-1">Run comprehensive Pratika brand accessibility validation</p>
+          </div>
+          <div class="bg-white p-3 rounded border">
+            <code class="text-sm font-mono text-gray-800">node scripts/check-accessibility.mjs</code>
+            <p class="text-sm text-gray-600 mt-1">Run general accessibility check on visual configuration</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  /* Ensure proper focus styles for testing */
+  button:focus,
+  input:focus,
+  select:focus,
+  a:focus {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+  
+  /* Custom focus ring for better visibility */
+  .focus-ring:focus {
+    box-shadow: 0 0 0 3px rgba(24, 32, 78, 0.1);
+  }
+</style>

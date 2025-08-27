@@ -1,9 +1,9 @@
 {
   "colors": {
     "brand": {
-      "primary": "#3b82f6",
-      "secondary": "#f59e0b",
-      "accent": "#10b981"
+      "primary": "#18204e",
+      "secondary": "#064f94",
+      "accent": "#23bdc5"
     },
     "ui": {
       "background": "#ffffff",
@@ -14,17 +14,18 @@
       "success": "#10b981",
       "warning": "#f59e0b",
       "error": "#ef4444",
-      "info": "#3b82f6"
+      "info": "#397dc0"
     }
   },
   "typography": {
     "fontFamilies": {
       "sans": [
-        "Inter",
+        "Open Sans",
         "system-ui",
         "sans-serif"
       ],
       "serif": [
+        "Merriweather",
         "Georgia",
         "serif"
       ],
