@@ -100,21 +100,40 @@
   --color-zinc-950: oklch(0.141 0.005 285.823);
 
   /* Pratika Brand Colors - Accessibility Optimized */
-  --color-brand-50: #f8f9ff;    /* Very light blue-tinted white */
-  --color-brand-100: #e8ebff;   /* Light blue-gray */
-  --color-brand-200: #c7d2ff;   /* Lighter blue */
-  --color-brand-300: #8fa5ff;   /* Light-medium blue - accessible for dark backgrounds */
-  --color-brand-400: #1e3a8a;   /* Medium blue - darker for better light background contrast */
-  --color-brand-500: #2d4ed8;   /* Medium-dark blue */
-  --color-brand-600: #18204e;   /* Primary: Pratika's exact brand color */
-  --color-brand-700: #131a3f;   /* Darker blue */
-  --color-brand-800: #0f1530;   /* Very dark blue */
-  --color-brand-900: #0a0f21;   /* Darkest blue */
+  --color-brand-50: #f8f9ff;
+  /* Very light blue-tinted white */
+  --color-brand-100: #e8ebff;
+  /* Light blue-gray */
+  --color-brand-200: #c7d2ff;
+  /* Lighter blue */
+  --color-brand-300: #8fa5ff;
+  /* Light-medium blue - accessible for dark backgrounds */
+  --color-brand-400: #1e3a8a;
+  /* Medium blue - darker for better light background contrast */
+  --color-brand-500: #2d4ed8;
+  /* Medium-dark blue */
+  --color-brand-600: #18204e;
+  /* Primary: Pratika's exact brand color */
+  --color-brand-700: #131a3f;
+  /* Darker blue */
+  --color-brand-800: #0f1530;
+  /* Very dark blue */
+  --color-brand-900: #0a0f21;
+  /* Darkest blue */
 
   /* Pratika Secondary and Complementary Colors */
-  --color-brand-secondary: oklch(0.35 0.18 240); /* #064f94 */
-  --color-brand-teal: oklch(0.70 0.15 180); /* #23bdc5 */
-  --color-brand-light-blue: oklch(0.60 0.16 240); /* #397dc0 */
+  --color-brand-secondary: oklch(0.35 0.18 240);
+  /* #064f94 */
+  --color-brand-teal: oklch(0.70 0.15 180);
+  /* #23bdc5 */
+  --color-brand-light-blue-50: oklch(0.95 0.05 240);
+  --color-brand-light-blue-100: oklch(0.90 0.08 240);
+  --color-brand-light-blue-200: oklch(0.80 0.12 240);
+  --color-brand-light-blue-300: oklch(0.70 0.15 240);
+  --color-brand-light-blue-400: oklch(0.60 0.16 240);
+  /* #397dc0 - Original brand-light-blue */
+  --color-brand-light-blue-500: oklch(0.50 0.18 240);
+  --color-brand-light-blue-600: oklch(0.40 0.20 240);
 
   /* Pratika Typography - Font Families */
   --font-family-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -131,6 +150,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -146,10 +166,17 @@
 
   /* Pratika Typography Defaults */
   body {
-    font-family: var(--font-family-sans); /* Open Sans for body text */
+    font-family: var(--font-family-sans);
+    /* Open Sans for body text */
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-family-serif); /* Merriweather for headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family-serif);
+    /* Merriweather for headings */
   }
 }

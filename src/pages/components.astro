@@ -1,0 +1,2450 @@
+---
+// Import necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import { SITE } from "@data/constants";
+import { getCollection } from "astro:content";
+
+// Import UI Components - Avatars
+import Avatar from "@/components/ui/avatars/Avatar.astro";
+import AvatarBlog from "@/components/ui/avatars/AvatarBlog.astro";
+import AvatarBlogLarge from "@/components/ui/avatars/AvatarBlogLarge.astro";
+import AvatarTestimonialSection from "@/components/ui/avatars/AvatarTestimonialSection.astro";
+
+// Import UI Components - Banners
+import AnnouncementBanner from "@/components/ui/banners/AnnouncementBanner.astro";
+
+// Import UI Components - Blocks
+import AccordionItem from "@/components/ui/blocks/AccordionItem.astro";
+import ContactIconBlock from "@/components/ui/blocks/ContactIconBlock.astro";
+import IconBlock from "@/components/ui/blocks/IconBlock.astro";
+import LeftSection from "@/components/ui/blocks/LeftSection.astro";
+import MainSection from "@/components/ui/blocks/MainSection.astro";
+import ReviewComponent from "@/components/ui/blocks/ReviewComponent.astro";
+import RightSection from "@/components/ui/blocks/RightSection.astro";
+import StatsBig from "@/components/ui/blocks/StatsBig.astro";
+import StatsGrid from "@/components/ui/blocks/StatsGrid.astro";
+import StatsSmall from "@/components/ui/blocks/StatsSmall.astro";
+import TabContent from "@/components/ui/blocks/TabContent.astro";
+import TabNav from "@/components/ui/blocks/TabNav.astro";
+
+// Import UI Components - Buttons
+import AuthBtn from "@/components/ui/buttons/AuthBtn.astro";
+import Bookmark from "@/components/ui/buttons/Bookmark.astro";
+import Btn404 from "@/components/ui/buttons/Btn404.astro";
+import GithubBtn from "@/components/ui/buttons/GithubBtn.astro";
+import GoogleBtn from "@/components/ui/buttons/GoogleBtn.astro";
+import LoginBtn from "@/components/ui/buttons/LoginBtn.astro";
+import PrimaryCTA from "@/components/ui/buttons/PrimaryCTA.astro";
+import ProductTabBtn from "@/components/ui/buttons/ProductTabBtn.astro";
+import SecondaryCTA from "@/components/ui/buttons/SecondaryCTA.astro";
+import SocialShare from "@/components/ui/buttons/SocialShare.astro";
+
+// Import UI Components - Cards
+import CardBlog from "@/components/ui/cards/CardBlog.astro";
+import CardBlogRecent from "@/components/ui/cards/CardBlogRecent.astro";
+import CardInsight from "@/components/ui/cards/CardInsight.astro";
+import CardRelated from "@/components/ui/cards/CardRelated.astro";
+import CardSmall from "@/components/ui/cards/CardSmall.astro";
+import CardWide from "@/components/ui/cards/CardWide.astro";
+
+// Import UI Components - Feedback
+import PostFeedback from "@/components/ui/feedback/PostFeedback.astro";
+
+// Import UI Components - Forms
+import LoginModal from "@/components/ui/forms/LoginModal.astro";
+import RegisterModal from "@/components/ui/forms/RegisterModal.astro";
+import RecoverModal from "@/components/ui/forms/RecoverModal.astro";
+
+// Import UI Components - Form Inputs
+import TextInput from "@/components/ui/forms/input/TextInput.astro";
+import EmailInput from "@/components/ui/forms/input/EmailInput.astro";
+import PasswordInput from "@/components/ui/forms/input/PasswordInput.astro";
+import PhoneInput from "@/components/ui/forms/input/PhoneInput.astro";
+import TextAreaInput from "@/components/ui/forms/input/TextAreaInput.astro";
+import Checkbox from "@/components/ui/forms/input/Checkbox.astro";
+import EmailContactInput from "@/components/ui/forms/input/EmailContactInput.astro";
+import EmailFooterInput from "@/components/ui/forms/input/EmailFooterInput.astro";
+
+// Import Icon component for IconBlock examples
+import Icon from "@/components/ui/icons/Icon.astro";
+
+// Import UI Components - Links
+import FooterSocialLink from "@/components/ui/links/FooterSocialLink.astro";
+import MegaMenuLink from "@/components/ui/links/MegaMenuLink.astro";
+import NavLink from "@/components/ui/links/NavLink.astro";
+
+// Import UI Components - Stars
+import FullStar from "@/components/ui/stars/FullStar.astro";
+import HalfStar from "@/components/ui/stars/HalfStar.astro";
+
+// Import Section Components - Features
+import FeaturesGeneral from "@/components/sections/features/FeaturesGeneral.astro";
+import FeaturesNavs from "@/components/sections/features/FeaturesNavs.astro";
+import FeaturesStats from "@/components/sections/features/FeaturesStats.astro";
+import FeaturesStatsAlt from "@/components/sections/features/FeaturesStatsAlt.astro";
+
+// Import Section Components - Landing
+import HeroSection from "@/components/sections/landing/HeroSection.astro";
+import HeroSectionAlt from "@/components/sections/landing/HeroSectionAlt.astro";
+import ClientsSection from "@/components/sections/landing/ClientsSection.astro";
+
+// Import Section Components - Navbar & Footer
+import Navbar from "@/components/sections/navbar&footer/Navbar.astro";
+import NavbarMegaMenu from "@/components/sections/navbar&footer/NavbarMegaMenu.astro";
+import FooterSection from "@/components/sections/navbar&footer/FooterSection.astro";
+
+// Import Section Components - Pricing
+import PricingSection from "@/components/sections/pricing/PricingSection.astro";
+
+// Import Section Components - Testimonials
+import TestimonialItem from "@/components/sections/testimonials/TestimonialItem.astro";
+import TestimonialsSection from "@/components/sections/testimonials/TestimonialsSection.astro";
+import TestimonialsSectionAlt from "@/components/sections/testimonials/TestimonialsSectionAlt.astro";
+
+// Import Section Components - Misc
+import Authentication from "@/components/sections/misc/Authentication.astro";
+import ContactSection from "@/components/sections/misc/ContactSection.astro";
+import FAQ from "@/components/sections/misc/FAQ.astro";
+
+// Get blog entries for avatar components
+const blogEntries = await getCollection("blog");
+const sampleBlogEntry = blogEntries[0]; // Use the first blog entry
+
+// Get insights entries for card components
+const insightEntries = await getCollection("insights");
+const sampleInsightEntry = insightEntries[0]; // Use the first insight entry
+
+// Get products entries for card components
+const productEntries = await getCollection("products");
+const sampleProductEntry = productEntries[0]; // Use the first product entry
+
+// Page metadata
+const pageTitle: string = `Component Showcase | ${SITE.title}`;
+const metaDescription = "Comprehensive showcase of all available UI and section components in the project. Discover and understand what components exist for building new pages.";
+const ogTitle = "Component Showcase | ScrewFast";
+
+// Sample Data Definitions
+
+// Avatar sample URLs for avatar components
+const avatarSamples = [
+  "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80",
+  "https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80",
+  "https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80",
+  "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+];
+
+// Sample text content for cards, blocks, and other text-based components
+const sampleContent = {
+  title: "Sample Component Title",
+  shortTitle: "Sample Title",
+  description: "This is a sample description demonstrating how this component looks with realistic content. It provides enough text to show proper text wrapping and spacing.",
+  shortDescription: "A brief sample description for smaller components.",
+  author: "John Doe",
+  authorAlt: "Portrait of John Doe",
+  date: new Date("2024-01-15"),
+  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+  longContent: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+  buttonText: "Learn More",
+  linkText: "Read Full Article",
+  price: "$99.99",
+  originalPrice: "$129.99",
+  rating: 4.5,
+  reviewCount: 127
+};
+
+// Sample form data and props for form components
+const sampleFormData = {
+  textInput: {
+    label: "Full Name",
+    id: "sample-name",
+    name: "fullName"
+  },
+  emailInput: {
+    label: "Email Address",
+    id: "sample-email", 
+    name: "email"
+  },
+  passwordInput: {
+    label: "Password",
+    id: "sample-password",
+    name: "password"
+  },
+  phoneInput: {
+    label: "Phone Number",
+    id: "sample-phone",
+    name: "phone"
+  },
+  textAreaInput: {
+    label: "Message",
+    id: "sample-message",
+    name: "message"
+  },
+  checkbox: {
+    label: "I agree to the terms and conditions",
+    id: "sample-checkbox",
+    name: "agreement"
+  }
+};
+
+// Import sample images
+import heroImage from "@/images/hero-image.avif";
+import constructionImage from "@/images/construction-image.avif";
+import dashboardImage from "@/images/dashboard-image.avif";
+import featuresImage from "@/images/features-image.avif";
+import productImage1 from "@/images/product-image-1.avif";
+import productImage2 from "@/images/product-image-2.avif";
+
+// Import partners data
+import { partnersData } from "@/data_files/constants";
+
+// Sample data for blocks components
+const sampleBlockData = {
+  accordion: {
+    id: "sample-accordion-1",
+    collapseId: "sample-collapse-1",
+    question: "What are the key features of this component?",
+    answer: "This accordion component provides collapsible content sections with smooth animations and accessibility features built-in."
+  },
+  iconBlock: {
+    heading: "Advanced Analytics",
+    content: "Get detailed insights into your project performance with comprehensive analytics and reporting tools."
+  },
+  mainSection: {
+    title: "Main Section Title",
+    subTitle: "This is a sample subtitle for the main section component demonstrating its layout and styling.",
+    btnExists: true,
+    btnTitle: "Get Started",
+    btnURL: "#"
+  },
+  leftSection: {
+    title: "Left Section Component",
+    subTitle: "This demonstrates the LeftSection component with image on the left and content on the right.",
+    btnExists: true,
+    btnTitle: "Learn More",
+    btnURL: "#",
+    img: heroImage,
+    imgAlt: "Sample hero image for LeftSection component"
+  },
+  rightSection: {
+    title: "Right Section Component",
+    subTitle: "This demonstrates the RightSection component with content on the left and images on the right.",
+    btnExists: true,
+    btnTitle: "Explore",
+    btnURL: "#",
+    single: false,
+    imgOne: constructionImage,
+    imgOneAlt: "Sample construction image",
+    imgTwo: dashboardImage,
+    imgTwoAlt: "Sample dashboard image"
+  },
+  tabContent: {
+    id: "sample-tab-content-1",
+    aria: "sample-tab-nav-1",
+    src: featuresImage,
+    alt: "Sample features image for TabContent component"
+  },
+  stats: {
+    title: "99.9%",
+    subTitle: "Uptime Guarantee",
+    smallTitle: "24/7",
+    smallSubTitle: "Support Available",
+    gridStats: [
+      { count: "10k+", description: "Active Users", index: 1 },
+      { count: "99.9%", description: "Uptime", index: 2 },
+      { count: "24/7", description: "Support", index: 3 }
+    ]
+  },
+  review: {
+    avatars: avatarSamples.slice(0, 3),
+    starCount: 4,
+    rating: "<strong>4.6</strong> out of 5",
+    reviews: "from <strong>7,000+</strong> reviews"
+  },
+  contact: {
+    heading: "Get in Touch",
+    content: "Have questions? We're here to help you succeed with your projects."
+  },
+  tabNav: {
+    id: "sample-tab-nav-1",
+    dataTab: "#sample-tab-content-1",
+    aria: "sample-tab-content-1",
+    heading: "Features",
+    content: "Explore our comprehensive feature set"
+  }
+};
+
+// Sample data for button components
+const sampleButtonData = {
+  primaryCTA: {
+    title: "Get Started",
+    url: "#"
+  },
+  secondaryCTA: {
+    title: "Learn More", 
+    url: "#"
+  },
+  authBtn: {
+    title: "Sign In"
+  },
+  loginBtn: {
+    title: "Login to Account"
+  },
+  socialShare: {
+    pageTitle: "Component Showcase - ScrewFast"
+  },
+  bookmark: {
+    title: "Bookmark This Page"
+  },
+  btn404: {
+    title: "Back to Home"
+  },
+  githubBtn: {
+    title: "View on GitHub"
+  },
+  googleBtn: {
+    title: "Continue with Google"
+  },
+  productTab: {
+    title: "Features",
+    isActive: true
+  }
+};
+
+
+// Sample data for icons, links, and stars components
+const sampleIconData = {
+  iconNames: ["dashboard", "tools", "verified", "books", "groups", "frame"],
+  iconDescriptions: {
+    dashboard: "Dashboard and analytics icon",
+    tools: "Tools and utilities icon", 
+    verified: "Verification and trust icon",
+    books: "Documentation and guides icon",
+    groups: "Teams and collaboration icon",
+    frame: "Profile and user management icon"
+  }
+};
+
+const sampleLinkData = {
+  footerSocial: {
+    facebook: "https://facebook.com/screwfast",
+    twitter: "https://twitter.com/screwfast", 
+    github: "https://github.com/screwfast",
+    linkedin: "https://linkedin.com/company/screwfast"
+  },
+  navigation: [
+    { name: "Home", url: "/" },
+    { name: "Products", url: "/products" },
+    { name: "Services", url: "/services" },
+    { name: "Blog", url: "/blog" },
+    { name: "Contact", url: "/contact" }
+  ]
+};
+
+const sampleStarData = {
+  ratings: [
+    { rating: 5, label: "Excellent (5 stars)" },
+    { rating: 4.5, label: "Very Good (4.5 stars)" },
+    { rating: 4, label: "Good (4 stars)" },
+    { rating: 3.5, label: "Average (3.5 stars)" }
+  ]
+};
+
+// Sample props for section components with realistic content
+const sampleSectionProps = {
+  features: {
+    title: "Powerful Features",
+    subTitle: "Discover the comprehensive set of tools and capabilities that make our platform the perfect choice for your projects.",
+    features: [
+      {
+        heading: "Advanced Analytics",
+        content: "Get detailed insights into your project performance with our comprehensive analytics dashboard.",
+        svg: "chartBar"
+      },
+      {
+        heading: "Secure Infrastructure", 
+        content: "Built with enterprise-grade security measures to protect your data and ensure compliance.",
+        svg: "shield"
+      },
+      {
+        heading: "24/7 Support",
+        content: "Our dedicated support team is available around the clock to help you succeed.",
+        svg: "support"
+      },
+      {
+        heading: "Easy Integration",
+        content: "Seamlessly integrate with your existing tools and workflows using our robust API.",
+        svg: "puzzle"
+      }
+    ],
+    benefits: [
+      "Advanced analytics and reporting dashboard",
+      "Enterprise-grade security and compliance",
+      "24/7 dedicated customer support",
+      "Seamless API integration capabilities",
+      "Scalable infrastructure for growth",
+      "Real-time collaboration tools"
+    ],
+    mainStatTitle: "99.9%",
+    mainStatSubTitle: "Uptime Guarantee",
+    stats: [
+      {
+        stat: "10k+",
+        description: "Active Users"
+      },
+      {
+        stat: "24/7",
+        description: "Support Available"
+      },
+      {
+        stat: "150+",
+        description: "Countries Served"
+      }
+    ],
+    mainStatTitle: "98%",
+    mainStatSubTitle: "of our users report improved productivity within the first month",
+    stats: [
+      {
+        stat: "99.9%",
+        description: "uptime guarantee",
+      },
+      {
+        stat: "10,000+",
+        description: "active users worldwide",
+      },
+      {
+        stat: "24/7",
+        description: "customer support available",
+      },
+    ],
+    tabs: [
+      {
+        heading: "Advanced Analytics",
+        content: "Get detailed insights into your project performance with our comprehensive analytics dashboard and reporting tools.",
+        svg: "dashboard",
+        src: dashboardImage,
+        alt: "Analytics dashboard screenshot",
+        first: true
+      },
+      {
+        heading: "Secure Infrastructure",
+        content: "Built with enterprise-grade security measures to protect your data and ensure compliance with industry standards.",
+        svg: "tools",
+        src: constructionImage,
+        alt: "Secure infrastructure illustration",
+        second: true
+      },
+      {
+        heading: "24/7 Support",
+        content: "Our dedicated support team is available around the clock to help you succeed with your projects and resolve any issues.",
+        svg: "groups",
+        src: featuresImage,
+        alt: "Support team illustration"
+      }
+    ]
+  },
+  hero: {
+    title: "Build Amazing Projects",
+    subTitle: "The complete toolkit for modern development teams",
+    description: "Streamline your workflow with our comprehensive suite of tools designed for efficiency and scalability.",
+    primaryCTA: {
+      title: "Get Started",
+      url: "#"
+    },
+    secondaryCTA: {
+      title: "Learn More", 
+      url: "#"
+    }
+  },
+  testimonial: {
+    content: "This platform has completely transformed how we approach our projects. The tools are intuitive, powerful, and the support team is exceptional.",
+    author: "Sarah Johnson",
+    role: "Lead Developer",
+    company: "TechCorp Inc.",
+    rating: 5
+  },
+  pricing: {
+    title: "Simple, Transparent Pricing",
+    subTitle: "Choose the plan that works best for your team",
+    plans: [
+      {
+        name: "Starter",
+        price: "$29",
+        period: "per month",
+        features: ["Up to 5 projects", "Basic analytics", "Email support"],
+        highlighted: false
+      },
+      {
+        name: "Professional", 
+        price: "$79",
+        period: "per month",
+        features: ["Unlimited projects", "Advanced analytics", "Priority support", "API access"],
+        highlighted: true
+      },
+      {
+        name: "Enterprise",
+        price: "Custom",
+        period: "contact us",
+        features: ["Custom solutions", "Dedicated support", "SLA guarantee", "On-premise option"],
+        highlighted: false
+      }
+    ]
+  },
+  clients: {
+    title: "Trusted by Industry Leaders",
+    subTitle: "Join thousands of companies that rely on our platform for their success."
+  },
+  testimonials: {
+    title: "What Our Customers Say",
+    subTitle: "Hear from the teams and individuals who trust our platform for their success.",
+    testimonials: [
+      {
+        content: "This platform has completely transformed how we approach our projects. The tools are intuitive, powerful, and the support team is exceptional.",
+        author: "Sarah Johnson",
+        role: "Lead Developer",
+        company: "TechCorp Inc.",
+        avatarSrc: avatarSamples[0],
+        avatarAlt: "Portrait of Sarah Johnson",
+        rating: 5
+      },
+      {
+        content: "The analytics and reporting features have given us insights we never had before. Our productivity has increased by 40% since we started using this platform.",
+        author: "Michael Chen",
+        role: "Project Manager", 
+        company: "Innovation Labs",
+        avatarSrc: avatarSamples[1],
+        avatarAlt: "Portrait of Michael Chen",
+        rating: 5
+      },
+      {
+        content: "Outstanding customer support and a product that actually delivers on its promises. We've been able to scale our operations significantly.",
+        author: "Emily Rodriguez",
+        role: "Operations Director",
+        company: "Growth Solutions",
+        avatarSrc: avatarSamples[2],
+        avatarAlt: "Portrait of Emily Rodriguez",
+        rating: 4
+      }
+    ]
+  },
+  pricing: {
+    title: "Simple, Transparent Pricing",
+    subTitle: "Choose the plan that works best for your team and scale as you grow.",
+    badge: "Most Popular",
+    thirdOption: "Looking for Enterprise solutions?",
+    btnText: "Contact Sales",
+    starterKit: {
+      name: "Starter Kit",
+      description: "Perfect for small teams getting started",
+      price: "$29",
+      cents: ".99",
+      billingFrequency: "per month",
+      features: [
+        "Up to 5 projects",
+        "Basic analytics dashboard", 
+        "Email support",
+        "5GB storage",
+        "Basic integrations"
+      ],
+      purchaseBtnTitle: "Get Started",
+      purchaseLink: "#"
+    },
+    professionalToolbox: {
+      name: "Professional Toolbox",
+      description: "Best for growing teams and businesses",
+      price: "$79",
+      cents: ".99", 
+      billingFrequency: "per month",
+      features: [
+        "Unlimited projects",
+        "Advanced analytics & reporting",
+        "Priority support",
+        "API access",
+        "50GB storage",
+        "Team collaboration tools",
+        "Advanced integrations"
+      ],
+      purchaseBtnTitle: "Start Free Trial",
+      purchaseLink: "#"
+    }
+  },
+  faq: {
+    title: "Frequently Asked Questions",
+    faqs: {
+      subTitle: "Find answers to common questions about our platform and services.",
+      faqs: [
+        {
+          question: "How do I get started with the platform?",
+          answer: "Getting started is easy! Simply sign up for a free account, complete the onboarding process, and you'll have access to all the tools you need to begin your first project."
+        },
+        {
+          question: "What kind of support do you offer?",
+          answer: "We offer comprehensive support including email support for all plans, priority support for Professional plans, and dedicated support for Enterprise customers. Our team is available 24/7 to help you succeed."
+        },
+        {
+          question: "Can I upgrade or downgrade my plan anytime?",
+          answer: "Yes, you can change your plan at any time. Upgrades take effect immediately, while downgrades take effect at the end of your current billing cycle."
+        },
+        {
+          question: "Is my data secure?",
+          answer: "Absolutely. We use enterprise-grade security measures including encryption at rest and in transit, regular security audits, and compliance with industry standards to protect your data."
+        }
+      ]
+    }
+  },
+  contact: {
+    title: "Get in Touch",
+    subTitle: "Have questions or need help? We're here to support your success.",
+    description: "Our team is ready to help you get the most out of our platform. Reach out with any questions, feedback, or support needs."
+  },
+  navbar: {
+    navItems: [
+      { name: "Home", url: "/" },
+      { name: "Products", url: "/products" },
+      { name: "Services", url: "/services" },
+      { name: "Blog", url: "/blog" },
+      { name: "Contact", url: "/contact" }
+    ]
+  }
+};
+
+
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://screwfast.uk/components",
+    url: "https://screwfast.uk/components",
+    name: "Component Showcase | ScrewFast",
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://screwfast.uk",
+      name: "ScrewFast",
+      description: "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs.",
+    },
+    inLanguage: "en-US",
+  }}
+>
+  <!-- Main content container -->
+  <div class="mx-auto max-w-[85rem] px-4 py-6 sm:px-6 sm:py-10 lg:px-8 lg:py-14">
+    <!-- Page header -->
+    <div class="mx-auto max-w-2xl text-center mb-8 sm:mb-10 lg:mb-14">
+      <h1 class="text-2xl font-bold md:text-4xl md:leading-tight text-neutral-800 dark:text-neutral-200">
+        Component Showcase
+      </h1>
+      <p class="mt-1 text-neutral-600 dark:text-neutral-400">
+        Discover all available UI and section components in the project. Visual examples with file paths for easy development reference.
+      </p>
+    </div>
+
+    <!-- UI Components Section -->
+    <section class="mb-12 sm:mb-16">
+      <div class="mb-6 sm:mb-8">
+        <h2 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200 mb-2">
+          UI Components
+        </h2>
+        <p class="text-neutral-600 dark:text-neutral-400">
+          Reusable UI components from <code class="bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded text-sm">src/components/ui/</code>
+        </p>
+      </div>
+
+      <!-- Avatars Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Avatars
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- Avatar Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Avatar</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/avatars/Avatar.astro</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+              <Avatar src={avatarSamples[0]} alt="Sample user avatar" />
+              <Avatar src={avatarSamples[1]} alt="Another sample avatar" />
+              <Avatar src={avatarSamples[2]} alt="Third sample avatar" />
+            </div>
+          </div>
+
+          <!-- AvatarBlog Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">AvatarBlog</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/avatars/AvatarBlog.astro</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+              <AvatarBlog blogEntry={sampleBlogEntry} />
+            </div>
+          </div>
+
+          <!-- AvatarBlogLarge Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">AvatarBlogLarge</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/avatars/AvatarBlogLarge.astro</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+              <AvatarBlogLarge blogEntry={sampleBlogEntry} />
+            </div>
+          </div>
+
+          <!-- AvatarTestimonialSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">AvatarTestimonialSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/avatars/AvatarTestimonialSection.astro</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+              <AvatarTestimonialSection src={avatarSamples[0]} alt="Testimonial author avatar" />
+              <AvatarTestimonialSection src={avatarSamples[1]} alt="Another testimonial author" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Banners Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Banners
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- AnnouncementBanner Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">AnnouncementBanner</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/banners/AnnouncementBanner.astro</p>
+            </div>
+            <div class="relative min-h-[80px] sm:min-h-[120px] bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 flex items-center justify-center">
+              <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                Banner appears at bottom of page when rendered
+              </p>
+              <!-- Note: AnnouncementBanner renders at bottom of page, so we show a placeholder here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blocks Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Blocks
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- AccordionItem Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">AccordionItem</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/blocks/AccordionItem.astro</p>
+            </div>
+            <AccordionItem 
+              id={sampleBlockData.accordion.id}
+              collapseId={sampleBlockData.accordion.collapseId}
+              question={sampleBlockData.accordion.question}
+              answer={sampleBlockData.accordion.answer}
+              first={true}
+            />
+          </div>
+
+          <!-- ContactIconBlock Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">ContactIconBlock</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/blocks/ContactIconBlock.astro</p>
+            </div>
+            <ContactIconBlock 
+              heading={sampleBlockData.contact.heading}
+              content={sampleBlockData.contact.content}
+              isLinkVisible={true}
+              linkTitle="Contact Us"
+              linkURL="#"
+              isArrowVisible={true}
+            >
+              <Icon name="envelopeOpen" />
+            </ContactIconBlock>
+          </div>
+
+          <!-- IconBlock Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">IconBlock</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/blocks/IconBlock.astro</p>
+            </div>
+            <IconBlock 
+              heading={sampleBlockData.iconBlock.heading}
+              content={sampleBlockData.iconBlock.content}
+            >
+              <Icon name="dashboard" />
+            </IconBlock>
+          </div>
+
+          <!-- LeftSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">LeftSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/blocks/LeftSection.astro</p>
+            </div>
+            <LeftSection 
+              title={sampleBlockData.leftSection.title}
+              subTitle={sampleBlockData.leftSection.subTitle}
+              btnExists={sampleBlockData.leftSection.btnExists}
+              btnTitle={sampleBlockData.leftSection.btnTitle}
+              btnURL={sampleBlockData.leftSection.btnURL}
+              img={sampleBlockData.leftSection.img}
+              imgAlt={sampleBlockData.leftSection.imgAlt}
+            />
+          </div>
+
+          <!-- MainSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">MainSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/blocks/MainSection.astro</p>
+            </div>
+            <MainSection 
+              title={sampleBlockData.mainSection.title}
+              subTitle={sampleBlockData.mainSection.subTitle}
+              btnExists={sampleBlockData.mainSection.btnExists}
+              btnTitle={sampleBlockData.mainSection.btnTitle}
+              btnURL={sampleBlockData.mainSection.btnURL}
+            />
+          </div>
+
+          <!-- ReviewComponent Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">ReviewComponent</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/blocks/ReviewComponent.astro</p>
+            </div>
+            <ReviewComponent 
+              avatars={sampleBlockData.review.avatars}
+              starCount={sampleBlockData.review.starCount}
+              rating={sampleBlockData.review.rating}
+              reviews={sampleBlockData.review.reviews}
+            />
+          </div>
+
+          <!-- RightSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">RightSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/blocks/RightSection.astro</p>
+            </div>
+            <RightSection 
+              title={sampleBlockData.rightSection.title}
+              subTitle={sampleBlockData.rightSection.subTitle}
+              btnExists={sampleBlockData.rightSection.btnExists}
+              btnTitle={sampleBlockData.rightSection.btnTitle}
+              btnURL={sampleBlockData.rightSection.btnURL}
+              single={sampleBlockData.rightSection.single}
+              imgOne={sampleBlockData.rightSection.imgOne}
+              imgOneAlt={sampleBlockData.rightSection.imgOneAlt}
+              imgTwo={sampleBlockData.rightSection.imgTwo}
+              imgTwoAlt={sampleBlockData.rightSection.imgTwoAlt}
+            />
+          </div>
+
+          <!-- StatsBig Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">StatsBig</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/blocks/StatsBig.astro</p>
+            </div>
+            <StatsBig 
+              title={sampleBlockData.stats.title}
+              subTitle={sampleBlockData.stats.subTitle}
+            />
+          </div>
+
+          <!-- StatsGrid Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">StatsGrid</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/blocks/StatsGrid.astro</p>
+            </div>
+            <ul class="grid grid-cols-1 divide-y divide-neutral-200 dark:divide-neutral-700 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+              {sampleBlockData.stats.gridStats.map((stat) => (
+                <StatsGrid 
+                  count={stat.count}
+                  description={stat.description}
+                  index={stat.index}
+                />
+              ))}
+            </ul>
+          </div>
+
+          <!-- StatsSmall Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">StatsSmall</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/blocks/StatsSmall.astro</p>
+            </div>
+            <StatsSmall 
+              title={sampleBlockData.stats.smallTitle}
+              subTitle={sampleBlockData.stats.smallSubTitle}
+            />
+          </div>
+
+          <!-- TabNav & TabContent System -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">TabNav & TabContent System</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/blocks/TabNav.astro + TabContent.astro</p>
+            </div>
+            
+            <!-- Tab System Container -->
+            <div data-hs-tabs-wrapper>
+              <!-- Tab Navigation -->
+              <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3" role="tablist">
+                <TabNav 
+                  id="tab-nav-1"
+                  dataTab="#tab-content-1"
+                  aria="tab-content-1"
+                  heading="Features"
+                  content="Explore our comprehensive feature set"
+                  first={true}
+                >
+                  <Icon name="tools" />
+                </TabNav>
+                
+                <TabNav 
+                  id="tab-nav-2"
+                  dataTab="#tab-content-2"
+                  aria="tab-content-2"
+                  heading="Dashboard"
+                  content="View analytics and insights"
+                  first={false}
+                >
+                  <Icon name="dashboard" />
+                </TabNav>
+                
+                <TabNav 
+                  id="tab-nav-3"
+                  dataTab="#tab-content-3"
+                  aria="tab-content-3"
+                  heading="Community"
+                  content="Connect with other users"
+                  first={false}
+                >
+                  <Icon name="community" />
+                </TabNav>
+              </div>
+
+              <!-- Tab Content Panels -->
+              <div class="mt-6">
+                <!-- Features Tab Content -->
+                <div id="tab-content-1" role="tabpanel" aria-labelledby="tab-nav-1">
+                  <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+                    <h5 class="font-medium text-neutral-800 dark:text-neutral-200 mb-2">Features Content</h5>
+                    <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                      This is the content for the Features tab. TabContent components normally display images and rich content, but require image props for full functionality.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Dashboard Tab Content -->
+                <div id="tab-content-2" class="hidden" role="tabpanel" aria-labelledby="tab-nav-2">
+                  <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+                    <h5 class="font-medium text-neutral-800 dark:text-neutral-200 mb-2">Dashboard Content</h5>
+                    <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                      This is the content for the Dashboard tab. Click between tabs to see the interactive behavior of the TabNav system.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Community Tab Content -->
+                <div id="tab-content-3" class="hidden" role="tabpanel" aria-labelledby="tab-nav-3">
+                  <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+                    <h5 class="font-medium text-neutral-800 dark:text-neutral-200 mb-2">Community Content</h5>
+                    <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                      This is the content for the Community tab. The TabNav and TabContent components work together to create interactive tabbed interfaces.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Buttons
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- AuthBtn Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">AuthBtn</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/ui/buttons/AuthBtn.astro</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+              <AuthBtn title={sampleButtonData.authBtn.title} />
+            </div>
+          </div>
+
+          <!-- Bookmark Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Bookmark</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/Bookmark.astro</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+              <Bookmark />
+            </div>
+          </div>
+
+          <!-- Btn404 Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Btn404</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/Btn404.astro</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+              <Btn404 
+                title={sampleButtonData.btn404.title}
+                id="sample-404-btn"
+              />
+              <Btn404 
+                title="No Arrow"
+                id="sample-404-btn-no-arrow"
+                noArrow={true}
+              />
+            </div>
+          </div>
+
+          <!-- GithubBtn Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">GithubBtn</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/GithubBtn.astro</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <GithubBtn 
+                title={sampleButtonData.githubBtn.title}
+                url="#"
+              />
+            </div>
+          </div>
+
+          <!-- GoogleBtn Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">GoogleBtn</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/GoogleBtn.astro</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <GoogleBtn title={sampleButtonData.googleBtn.title} />
+            </div>
+          </div>
+
+          <!-- LoginBtn Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">LoginBtn</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/LoginBtn.astro</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <LoginBtn title={sampleButtonData.loginBtn.title} />
+            </div>
+          </div>
+
+          <!-- PrimaryCTA Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">PrimaryCTA</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/PrimaryCTA.astro</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <PrimaryCTA 
+                title={sampleButtonData.primaryCTA.title}
+                url={sampleButtonData.primaryCTA.url}
+              />
+              <PrimaryCTA 
+                title="No Arrow"
+                url="#"
+                noArrow={true}
+              />
+            </div>
+          </div>
+
+          <!-- ProductTabBtn Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">ProductTabBtn</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/ProductTabBtn.astro</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <ProductTabBtn 
+                id="sample-tab-1"
+                dataTab="sample-tab-content-1"
+                title={sampleButtonData.productTab.title}
+                first={true}
+              />
+              <ProductTabBtn 
+                id="sample-tab-2"
+                dataTab="sample-tab-content-2"
+                title="Pricing"
+                first={false}
+              />
+            </div>
+          </div>
+
+          <!-- SecondaryCTA Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">SecondaryCTA</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/SecondaryCTA.astro</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <SecondaryCTA 
+                title={sampleButtonData.secondaryCTA.title}
+                url={sampleButtonData.secondaryCTA.url}
+              />
+            </div>
+          </div>
+
+          <!-- SocialShare Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">SocialShare</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/buttons/SocialShare.astro</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <SocialShare pageTitle={sampleButtonData.socialShare.pageTitle} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Cards
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- CardBlog Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">CardBlog</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/cards/CardBlog.astro</p>
+            </div>
+            <div class="max-w-md">
+              <CardBlog 
+                blogEntry={sampleBlogEntry}
+              />
+            </div>
+          </div>
+
+          <!-- CardBlogRecent Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">CardBlogRecent</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/cards/CardBlogRecent.astro</p>
+            </div>
+            <div class="max-w-4xl">
+              <CardBlogRecent 
+                blogEntry={sampleBlogEntry}
+              />
+            </div>
+          </div>
+
+          <!-- CardInsight Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">CardInsight</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/cards/CardInsight.astro</p>
+            </div>
+            <div class="max-w-md">
+              {sampleInsightEntry ? (
+                <CardInsight 
+                  insightEntry={sampleInsightEntry}
+                />
+              ) : (
+                <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+                  <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                    No insight entries available for demonstration
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <!-- CardRelated Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">CardRelated</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/cards/CardRelated.astro</p>
+            </div>
+            <div class="max-w-md">
+              {sampleBlogEntry ? (
+                <CardRelated 
+                  blogEntry={sampleBlogEntry}
+                />
+              ) : (
+                <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+                  <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                    No blog entries available for demonstration
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <!-- CardSmall Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">CardSmall</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/cards/CardSmall.astro</p>
+            </div>
+            <div class="max-w-sm">
+              {sampleProductEntry ? (
+                <CardSmall 
+                  product={sampleProductEntry}
+                />
+              ) : (
+                <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+                  <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                    No product entries available for demonstration
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <!-- CardWide Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">CardWide</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/cards/CardWide.astro</p>
+            </div>
+            <div class="max-w-2xl">
+              {sampleProductEntry ? (
+                <CardWide 
+                  product={sampleProductEntry}
+                />
+              ) : (
+                <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+                  <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                    No product entries available for demonstration
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Feedback
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- PostFeedback Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">PostFeedback</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/feedback/PostFeedback.astro</p>
+            </div>
+            <div class="max-w-md">
+              <PostFeedback />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forms Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Forms
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- LoginModal Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">LoginModal</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/LoginModal.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+              <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-2">
+                <strong>Modal Component:</strong> This component renders as an overlay modal. Click outside or use the X button to close.
+              </p>
+              <button 
+                class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-semibold text-white hover:bg-brand-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600"
+                data-hs-overlay="#showcase-login-modal"
+              >
+                Open Login Modal
+              </button>
+            </div>
+          </div>
+
+          <!-- RegisterModal Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">RegisterModal</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/RegisterModal.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+              <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-2">
+                <strong>Modal Component:</strong> This component renders as an overlay modal. Click outside or use the X button to close.
+              </p>
+              <button 
+                class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-semibold text-white hover:bg-brand-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600"
+                data-hs-overlay="#showcase-register-modal"
+              >
+                Open Register Modal
+              </button>
+            </div>
+          </div>
+
+          <!-- RecoverModal Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">RecoverModal</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/RecoverModal.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-4">
+              <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-2">
+                <strong>Modal Component:</strong> This component renders as an overlay modal. Click outside or use the X button to close.
+              </p>
+              <button 
+                class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-semibold text-white hover:bg-brand-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600"
+                data-hs-overlay="#showcase-recover-modal"
+              >
+                Open Recover Modal
+              </button>
+            </div>
+          </div>
+
+          <!-- Sample Form Example -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Sample Contact Form</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">Example using multiple input components</p>
+            </div>
+            <div class="max-w-md">
+              <form class="space-y-4">
+                <TextInput 
+                  label={sampleFormData.textInput.label}
+                  id={sampleFormData.textInput.id}
+                  name={sampleFormData.textInput.name}
+                />
+                <EmailInput 
+                  label={sampleFormData.emailInput.label}
+                  id={sampleFormData.emailInput.id}
+                  errorId="sample-email-error"
+                />
+                <PhoneInput 
+                  label={sampleFormData.phoneInput.label}
+                  id={sampleFormData.phoneInput.id}
+                />
+                <TextAreaInput 
+                  label={sampleFormData.textAreaInput.label}
+                  id={sampleFormData.textAreaInput.id}
+                  name={sampleFormData.textAreaInput.name}
+                />
+                <div class="flex items-center">
+                  <div class="flex">
+                    <input
+                      id={sampleFormData.checkbox.id}
+                      name={sampleFormData.checkbox.name}
+                      type="checkbox"
+                      class="mt-0.5 shrink-0 rounded-sm border-neutral-200 text-neutral-600 focus:ring-brand-400 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-brand-400 dark:checked:bg-brand-400 dark:focus:ring-offset-neutral-800"
+                    />
+                  </div>
+                  <div class="ms-3">
+                    <label for={sampleFormData.checkbox.id} class="text-sm text-neutral-800 dark:text-neutral-200">
+                      {sampleFormData.checkbox.label}
+                    </label>
+                  </div>
+                </div>
+                <button 
+                  type="submit"
+                  class="w-full inline-flex justify-center items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-semibold text-white hover:bg-brand-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600"
+                >
+                  Submit Form
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Components Subcategory -->
+      <div class="mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Input Components
+        </h3>
+        <div class="space-y-6">
+          <!-- TextInput Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">TextInput</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/TextInput.astro</p>
+            </div>
+            <div class="max-w-sm">
+              <TextInput 
+                label="Sample Text Input"
+                id="showcase-text-input"
+                name="sampleText"
+              />
+            </div>
+          </div>
+
+          <!-- EmailInput Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">EmailInput</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/EmailInput.astro</p>
+            </div>
+            <div class="max-w-sm">
+              <EmailInput 
+                label="Email Address"
+                id="showcase-email-input"
+                errorId="showcase-email-error"
+              />
+            </div>
+          </div>
+
+          <!-- PasswordInput Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">PasswordInput</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/PasswordInput.astro</p>
+            </div>
+            <div class="max-w-sm space-y-4">
+              <PasswordInput 
+                label="Password"
+                id="showcase-password-input"
+                errorId="showcase-password-error"
+                content="8+ characters required"
+              />
+              <PasswordInput 
+                label="Password with Forgot Link"
+                forgot={true}
+                id="showcase-password-forgot"
+                errorId="showcase-password-forgot-error"
+                content="8+ characters required"
+              />
+            </div>
+          </div>
+
+          <!-- PhoneInput Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">PhoneInput</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/PhoneInput.astro</p>
+            </div>
+            <div class="max-w-sm">
+              <PhoneInput 
+                label="Phone Number"
+                id="showcase-phone-input"
+              />
+            </div>
+          </div>
+
+          <!-- TextAreaInput Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">TextAreaInput</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/TextAreaInput.astro</p>
+            </div>
+            <div class="max-w-sm">
+              <TextAreaInput 
+                label="Your Message"
+                id="showcase-textarea-input"
+                name="message"
+              />
+            </div>
+          </div>
+
+          <!-- Checkbox Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Checkbox</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/Checkbox.astro</p>
+            </div>
+            <div class="space-y-3">
+              <!-- Working Checkbox Examples -->
+              <div class="flex items-center">
+                <div class="flex">
+                  <input
+                    id="showcase-checkbox-1"
+                    name="remember-me"
+                    type="checkbox"
+                    class="mt-0.5 shrink-0 rounded-sm border-neutral-200 text-neutral-600 focus:ring-brand-400 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-brand-400 dark:checked:bg-brand-400 dark:focus:ring-offset-neutral-800"
+                  />
+                </div>
+                <div class="ms-3">
+                  <label for="showcase-checkbox-1" class="text-sm text-neutral-800 dark:text-neutral-200">
+                    Remember me
+                  </label>
+                </div>
+              </div>
+              
+              <div class="flex items-center">
+                <div class="flex">
+                  <input
+                    id="showcase-checkbox-2"
+                    name="terms-agreement"
+                    type="checkbox"
+                    class="mt-0.5 shrink-0 rounded-sm border-neutral-200 text-neutral-600 focus:ring-brand-400 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-brand-400 dark:checked:bg-brand-400 dark:focus:ring-offset-neutral-800"
+                  />
+                </div>
+                <div class="ms-3">
+                  <label for="showcase-checkbox-2" class="text-sm text-neutral-800 dark:text-neutral-200">
+                    I agree to the terms and conditions
+                  </label>
+                </div>
+              </div>
+              
+              <div class="flex items-center">
+                <div class="flex">
+                  <input
+                    id="showcase-checkbox-3"
+                    name="newsletter"
+                    type="checkbox"
+                    class="mt-0.5 shrink-0 rounded-sm border-neutral-200 text-neutral-600 focus:ring-brand-400 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-brand-400 dark:checked:bg-brand-400 dark:focus:ring-offset-neutral-800"
+                  />
+                </div>
+                <div class="ms-3">
+                  <label for="showcase-checkbox-3" class="text-sm text-neutral-800 dark:text-neutral-200">
+                    Subscribe to newsletter
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EmailContactInput Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">EmailContactInput</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/EmailContactInput.astro</p>
+            </div>
+            <div class="max-w-sm">
+              <EmailContactInput />
+            </div>
+          </div>
+
+          <!-- EmailFooterInput Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">EmailFooterInput</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/EmailFooterInput.astro</p>
+            </div>
+            <div class="max-w-sm">
+              <EmailFooterInput />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Icons Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Icons
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- Icon Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Icon</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/icons/Icon.astro</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
+              {sampleIconData.iconNames.map((iconName) => (
+                <div class="flex flex-col items-center space-y-2 p-4 border border-neutral-100 dark:border-neutral-600 rounded-lg">
+                  <Icon name={iconName} />
+                  <div class="text-center">
+                    <p class="text-xs font-medium text-neutral-800 dark:text-neutral-200">{iconName}</p>
+                    <p class="text-xs text-neutral-500 dark:text-neutral-400">{sampleIconData.iconDescriptions[iconName]}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div class="mt-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600">
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                <strong>Usage:</strong> <code class="bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded text-xs">&lt;Icon name="iconName" /&gt;</code>
+              </p>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+                Icons are defined in <code class="bg-neutral-100 dark:bg-neutral-700 px-1 rounded">src/components/ui/icons/icons.ts</code>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Links Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Links
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- FooterSocialLink Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">FooterSocialLink</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/links/FooterSocialLink.astro</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <FooterSocialLink url={sampleLinkData.footerSocial.facebook}>
+                <Icon name="facebookFooter" />
+              </FooterSocialLink>
+              <FooterSocialLink url={sampleLinkData.footerSocial.twitter}>
+                <Icon name="xFooter" />
+              </FooterSocialLink>
+              <FooterSocialLink url={sampleLinkData.footerSocial.github}>
+                <Icon name="githubFooter" />
+              </FooterSocialLink>
+              <FooterSocialLink url={sampleLinkData.footerSocial.linkedin}>
+                <Icon name="linkedIn" />
+              </FooterSocialLink>
+            </div>
+            <div class="mt-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600">
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                <strong>Usage:</strong> Wrap social media icons with this component for consistent footer styling.
+              </p>
+            </div>
+          </div>
+
+          <!-- MegaMenuLink Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">MegaMenuLink</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/links/MegaMenuLink.astro</p>
+            </div>
+            <div class="relative">
+              <!-- Live MegaMenuLink Component -->
+              <MegaMenuLink />
+              
+              <!-- Usage Information -->
+              <div class="mt-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600">
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                  <strong>Interactive Dropdown Menu:</strong> Hover over "Services" above to see the mega menu in action. This component creates a comprehensive dropdown with service links and success stories.
+                </p>
+                <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2">
+                  Depends on: <code class="bg-neutral-100 dark:bg-neutral-700 px-1 rounded">src/data_files/mega_link.ts</code>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- NavLink Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">NavLink</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/links/NavLink.astro</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+              {sampleLinkData.navigation.map((link) => (
+                <NavLink url={link.url} name={link.name} />
+              ))}
+            </div>
+            <div class="mt-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600">
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                <strong>Usage:</strong> Navigation links with active state highlighting. Automatically highlights the current page.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stars Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Stars
+        </h3>
+        <div class="space-y-4 sm:space-y-6">
+          <!-- FullStar Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">FullStar</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/stars/FullStar.astro</p>
+            </div>
+            <div class="space-y-4">
+              {sampleStarData.ratings.map((item) => (
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center">
+                    {Array.from({ length: Math.floor(item.rating) }, (_, i) => (
+                      <FullStar />
+                    ))}
+                    {item.rating % 1 !== 0 && <HalfStar />}
+                    {Array.from({ length: 5 - Math.ceil(item.rating) }, (_, i) => (
+                      <div class="h-4 w-4 text-neutral-300 dark:text-neutral-600">
+                        <svg class="h-4 w-4" width="51" height="51" viewBox="0 0 51 51" fill="none">
+                          <path d="M27.0352 1.6307L33.9181 16.3633C34.2173 16.6768 34.5166 16.9903 34.8158 16.9903L50.0779 19.1845C50.9757 19.1845 51.275 20.4383 50.6764 21.0652L39.604 32.3498C39.3047 32.6632 39.3047 32.9767 39.3047 33.2901L41.998 49.2766C42.2973 50.217 41.1002 50.8439 40.5017 50.5304L26.4367 43.3208C26.1375 43.3208 25.8382 43.3208 25.539 43.3208L11.7732 50.8439C10.8754 51.1573 9.97763 50.5304 10.2769 49.59L12.9702 33.6036C12.9702 33.2901 12.9702 32.9767 12.671 32.6632L1.29923 21.0652C0.700724 20.4383 0.999979 19.4979 1.89775 19.4979L17.1598 17.3037C17.459 17.3037 17.7583 16.9903 18.0575 16.6768L24.9404 1.6307C25.539 0.69032 26.736 0.69032 27.0352 1.6307Z" fill="currentColor"/>
+                        </svg>
+                      </div>
+                    ))}
+                  </div>
+                  <span class="text-sm text-neutral-600 dark:text-neutral-400">{item.label}</span>
+                </div>
+              ))}
+            </div>
+            <div class="mt-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600">
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                <strong>Usage:</strong> Use FullStar for complete star ratings and combine with HalfStar for partial ratings.
+              </p>
+            </div>
+          </div>
+
+          <!-- HalfStar Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">HalfStar</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/stars/HalfStar.astro</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="flex items-center">
+                <FullStar />
+                <FullStar />
+                <FullStar />
+                <HalfStar />
+                <div class="h-4 w-4 text-neutral-300 dark:text-neutral-600">
+                  <svg class="h-4 w-4" width="51" height="51" viewBox="0 0 51 51" fill="none">
+                    <path d="M27.0352 1.6307L33.9181 16.3633C34.2173 16.6768 34.5166 16.9903 34.8158 16.9903L50.0779 19.1845C50.9757 19.1845 51.275 20.4383 50.6764 21.0652L39.604 32.3498C39.3047 32.6632 39.3047 32.9767 39.3047 33.2901L41.998 49.2766C42.2973 50.217 41.1002 50.8439 40.5017 50.5304L26.4367 43.3208C26.1375 43.3208 25.8382 43.3208 25.539 43.3208L11.7732 50.8439C10.8754 51.1573 9.97763 50.5304 10.2769 49.59L12.9702 33.6036C12.9702 33.2901 12.9702 32.9767 12.671 32.6632L1.29923 21.0652C0.700724 20.4383 0.999979 19.4979 1.89775 19.4979L17.1598 17.3037C17.459 17.3037 17.7583 16.9903 18.0575 16.6768L24.9404 1.6307C25.539 0.69032 26.736 0.69032 27.0352 1.6307Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+              <span class="text-sm text-neutral-600 dark:text-neutral-400">3.5 out of 5 stars</span>
+            </div>
+            <div class="mt-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded border-2 border-dashed border-neutral-300 dark:border-neutral-600">
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                <strong>Usage:</strong> Use HalfStar to represent partial ratings (e.g., 3.5 stars, 4.5 stars).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Components Section -->
+    <section class="mb-12 sm:mb-16">
+      <div class="mb-6 sm:mb-8">
+        <h2 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200 mb-2">
+          Section Components
+        </h2>
+        <p class="text-neutral-600 dark:text-neutral-400">
+          Page-level section components from <code class="bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded text-sm">src/components/sections/</code>
+        </p>
+      </div>
+      
+      <!-- Features Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Features
+        </h3>
+        <div class="space-y-6 sm:space-y-8">
+          <!-- FeaturesGeneral Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">FeaturesGeneral</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/sections/features/FeaturesGeneral.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-3 sm:p-4 overflow-hidden">
+              <FeaturesGeneral 
+                title={sampleSectionProps.features.title}
+                subTitle={sampleSectionProps.features.subTitle}
+                features={sampleSectionProps.features.features}
+                src={featuresImage}
+                alt="Features showcase image"
+              />
+            </div>
+          </div>
+
+          <!-- FeaturesNavs Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">FeaturesNavs</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/sections/features/FeaturesNavs.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-3 sm:p-4 overflow-hidden">
+              <FeaturesNavs 
+                title={sampleSectionProps.features.title}
+                tabs={sampleSectionProps.features.tabs}
+              />
+            </div>
+          </div>
+
+          <!-- FeaturesStats Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">FeaturesStats</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/sections/features/FeaturesStats.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-3 sm:p-4 overflow-hidden">
+              <FeaturesStats 
+                title={sampleSectionProps.features.title}
+                subTitle={sampleSectionProps.features.subTitle}
+                mainStatTitle={sampleSectionProps.features.mainStatTitle}
+                mainStatSubTitle={sampleSectionProps.features.mainStatSubTitle}
+                stats={sampleSectionProps.features.stats}
+              />
+            </div>
+          </div>
+
+          <!-- FeaturesStatsAlt Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">FeaturesStatsAlt</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/sections/features/FeaturesStatsAlt.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-3 sm:p-4 overflow-hidden">
+              <FeaturesStatsAlt 
+                title={sampleSectionProps.features.title}
+                subTitle={sampleSectionProps.features.subTitle}
+                benefits={sampleSectionProps.features.benefits}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Landing Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Landing
+        </h3>
+        <div class="space-y-6 sm:space-y-8">
+          <!-- HeroSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 sm:p-6">
+            <div class="mb-3 sm:mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">HeroSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono break-all sm:break-normal">src/components/sections/landing/HeroSection.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-3 sm:p-4 overflow-hidden">
+              <HeroSection 
+                title={sampleSectionProps.hero.title}
+                subTitle={sampleSectionProps.hero.subTitle}
+                primaryBtn={sampleSectionProps.hero.primaryCTA.title}
+                primaryBtnURL={sampleSectionProps.hero.primaryCTA.url}
+                secondaryBtn={sampleSectionProps.hero.secondaryCTA.title}
+                secondaryBtnURL={sampleSectionProps.hero.secondaryCTA.url}
+                withReview={true}
+                avatars={avatarSamples.slice(0, 3)}
+                starCount={5}
+                rating="<strong>4.8</strong> out of 5"
+                reviews="from <strong>5,000+</strong> reviews"
+                src={heroImage}
+                alt="Hero section image"
+              />
+            </div>
+          </div>
+
+          <!-- HeroSectionAlt Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">HeroSectionAlt</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/landing/HeroSectionAlt.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <HeroSectionAlt 
+                title="Alternative Hero Design"
+                subTitle="Experience a different approach to hero sections with this alternative layout and styling."
+                primaryBtn="Start Free Trial"
+                primaryBtnURL="#"
+                secondaryBtn="View Demo"
+                secondaryBtnURL="#"
+                src={constructionImage}
+                alt="Alternative hero section image"
+              />
+            </div>
+          </div>
+
+          <!-- ClientsSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">ClientsSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/landing/ClientsSection.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <ClientsSection 
+                title={sampleSectionProps.clients.title}
+                subTitle={sampleSectionProps.clients.subTitle}
+                partners={partnersData}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navbar & Footer Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Navbar & Footer
+        </h3>
+        <div class="space-y-6 sm:space-y-8">
+          <!-- Navbar Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Navbar</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/navbar&footer/Navbar.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <Navbar />
+            </div>
+          </div>
+
+          <!-- NavbarMegaMenu Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">NavbarMegaMenu</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/navbar&footer/NavbarMegaMenu.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <NavbarMegaMenu />
+            </div>
+          </div>
+
+          <!-- FooterSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">FooterSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/navbar&footer/FooterSection.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <FooterSection />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Pricing
+        </h3>
+        <div class="space-y-6 sm:space-y-8">
+          <!-- PricingSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">PricingSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/pricing/PricingSection.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <PricingSection 
+                pricing={sampleSectionProps.pricing}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonials Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Testimonials
+        </h3>
+        <div class="space-y-6 sm:space-y-8">
+          <!-- TestimonialItem Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">TestimonialItem</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/testimonials/TestimonialItem.astro</p>
+              <p class="text-xs text-neutral-500 dark:text-neutral-500 mt-1">
+                <em>Note: Typically used within TestimonialsSection, shown here as individual component</em>
+              </p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <TestimonialItem 
+                content={sampleSectionProps.testimonials.testimonials[0].content}
+                author={sampleSectionProps.testimonials.testimonials[0].author}
+                role={sampleSectionProps.testimonials.testimonials[0].role}
+                avatarSrc={sampleSectionProps.testimonials.testimonials[0].avatarSrc}
+              />
+            </div>
+          </div>
+
+          <!-- TestimonialsSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">TestimonialsSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/testimonials/TestimonialsSection.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <TestimonialsSection 
+                title="Fast-Track Your Projects"
+                subTitle="At ScrewFast, we ensure a swift start with instant account setup. Experience the speed of construction redefined."
+                testimonials={[sampleSectionProps.testimonials.testimonials[0]]}
+                statistics={[
+                  {
+                    count: "70k+",
+                    description: "customers equipped — from DIY to major construction firms"
+                  },
+                  {
+                    count: "35%",
+                    description: "uptick in project efficiency with ScrewFast tools and services"
+                  },
+                  {
+                    count: "15.3%",
+                    description: "reduction in maintenance costs reported by long-term clients"
+                  },
+                  {
+                    count: "2x",
+                    description: "quicker assembly using innovative fastening solutions"
+                  }
+                ]}
+              />
+            </div>
+          </div>
+
+          <!-- TestimonialsSectionAlt Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">TestimonialsSectionAlt</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/testimonials/TestimonialsSectionAlt.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <TestimonialsSectionAlt 
+                title="What Our Customers Say"
+                testimonials={sampleSectionProps.testimonials.testimonials}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Misc Category -->
+      <div class="mb-8 sm:mb-12">
+        <h3 class="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-4">
+          Misc
+        </h3>
+        <div class="space-y-6 sm:space-y-8">
+          <!-- Authentication Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Authentication</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/misc/Authentication.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <Authentication />
+            </div>
+          </div>
+
+          <!-- ContactSection Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">ContactSection</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/misc/ContactSection.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <ContactSection />
+            </div>
+          </div>
+
+          <!-- FAQ Component -->
+          <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6">
+            <div class="mb-4">
+              <h4 class="font-medium text-neutral-800 dark:text-neutral-200">FAQ</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/sections/misc/FAQ.astro</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+              <FAQ 
+                title={sampleSectionProps.faq.title}
+                faqs={sampleSectionProps.faq.faqs}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- AnnouncementBanner - renders at bottom of page -->
+  <AnnouncementBanner 
+    title="Check out our latest features!"
+    btnId="showcase-banner-dismiss"
+    btnTitle="Learn More"
+    url="#"
+  />
+
+  <!-- Modal Components for Forms Showcase -->
+  <!-- Showcase Login Modal -->
+  <div
+    id="showcase-login-modal"
+    class="hs-overlay absolute start-0 top-0 z-50 hidden h-full w-full hs-overlay-backdrop-open:bg-neutral-900/90"
+  >
+    <div
+      class="m-3 mt-0 opacity-0 transition-all ease-out hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 sm:mx-auto sm:w-full sm:max-w-lg"
+    >
+      <div class="mx-auto w-full max-w-md p-6">
+        <div
+          class="mt-7 rounded-xl border border-neutral-200 bg-neutral-100 shadow-xs dark:border-neutral-700 dark:bg-neutral-800"
+        >
+          <!-- Close button -->
+          <div class="flex justify-end p-4 pb-0">
+            <button
+              type="button"
+              class="flex h-7 w-7 items-center justify-center rounded-full border border-transparent text-sm font-semibold text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200"
+              data-hs-overlay="#showcase-login-modal"
+            >
+              <span class="sr-only">Close</span>
+              <svg
+                class="h-4 w-4 flex-shrink-0"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m18 6-12 12"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="p-4 pt-0 sm:p-7 sm:pt-0">
+            <div class="text-center">
+              <div
+                class="block text-2xl font-bold text-neutral-800 dark:text-neutral-200"
+                role="heading"
+                aria-level="1"
+              >
+                Sign in
+              </div>
+              <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                Don't have an account yet?
+                <button
+                  class="rounded-lg p-1 font-medium text-brand-600 decoration-2 outline-hidden ring-zinc-500 hover:underline hover:text-brand-700 focus-visible:ring-3 dark:text-brand-300 dark:ring-zinc-200 dark:focus:outline-hidden"
+                  data-hs-overlay="#showcase-register-modal"
+                >
+                  Sign up here
+                </button>
+              </p>
+            </div>
+            <div class="mt-5">
+              <button class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-neutral-200 bg-white text-neutral-800 shadow-sm hover:bg-neutral-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+                <svg class="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
+                  <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4"/>
+                  <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853"/>
+                  <path d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z" fill="#FBBC05"/>
+                  <path d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z" fill="#EB4335"/>
+                </svg>
+                Sign in with Google
+              </button>
+
+              <div
+                class="flex items-center py-3 text-xs uppercase text-neutral-400 before:me-6 before:flex-[1_1_0%] before:border-t before:border-neutral-200 after:ms-6 after:flex-[1_1_0%] after:border-t after:border-neutral-200 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600"
+              >
+                Or
+              </div>
+              
+              <form>
+                <div class="grid gap-y-4">
+                  <div>
+                    <label for="showcase-login-email" class="mb-2 block text-sm text-neutral-800 dark:text-neutral-200">Email address</label>
+                    <input
+                      type="email"
+                      id="showcase-login-email"
+                      name="email"
+                      class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 focus:border-neutral-200 focus:outline-hidden focus:ring-3 focus:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-700/30 dark:text-neutral-300 dark:focus:ring-1"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <div class="flex items-center justify-between">
+                      <label for="showcase-login-password" class="mb-2 block text-sm text-neutral-800 dark:text-neutral-200">Password</label>
+                      <button
+                        type="button"
+                        class="rounded-lg text-sm font-medium text-brand-400 decoration-2 outline-hidden ring-zinc-500 hover:underline focus-visible:ring-3 dark:text-brand-400 dark:ring-zinc-200 dark:focus:outline-hidden dark:focus:ring-1"
+                        data-hs-overlay="#showcase-recover-modal"
+                      >
+                        Forgot password?
+                      </button>
+                    </div>
+                    <input
+                      type="password"
+                      id="showcase-login-password"
+                      name="password"
+                      class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 focus:border-neutral-200 focus:outline-hidden focus:ring-3 focus:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-700/30 dark:text-neutral-300 dark:focus:ring-1"
+                      required
+                    />
+                  </div>
+                  
+                  <div class="flex items-center">
+                    <div class="flex">
+                      <input
+                        id="showcase-login-remember"
+                        name="remember-me"
+                        type="checkbox"
+                        class="mt-0.5 shrink-0 rounded-sm border-neutral-200 text-neutral-600 focus:ring-brand-400 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-brand-400 dark:checked:bg-brand-400 dark:focus:ring-offset-neutral-800"
+                      />
+                    </div>
+                    <div class="ms-3">
+                      <label for="showcase-login-remember" class="text-sm text-neutral-800 dark:text-neutral-200">
+                        Remember me
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    Sign in
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Showcase Register Modal -->
+  <div
+    id="showcase-register-modal"
+    class="hs-overlay hs-overlay-backdrop-open:bg-neutral-900/90 absolute start-0 top-0 z-50 hidden h-full w-full"
+  >
+    <div
+      class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 m-3 mt-0 opacity-0 transition-all ease-out sm:mx-auto sm:w-full sm:max-w-lg"
+    >
+      <div class="mx-auto w-full max-w-md p-6">
+        <div
+          class="mt-7 flex max-h-[calc(100vh-8rem)] flex-col rounded-xl border border-neutral-200 bg-neutral-100 shadow-xs dark:border-neutral-700 dark:bg-neutral-800"
+        >
+          <!-- Close button -->
+          <div class="flex justify-end p-4 pb-0">
+            <button
+              type="button"
+              class="flex h-7 w-7 items-center justify-center rounded-full border border-transparent text-sm font-semibold text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200"
+              data-hs-overlay="#showcase-register-modal"
+            >
+              <span class="sr-only">Close</span>
+              <svg
+                class="h-4 w-4 flex-shrink-0"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m18 6-12 12"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="overflow-y-auto p-4 pt-0 sm:p-7 sm:pt-0">
+            <div class="text-center">
+              <div
+                class="block text-2xl font-bold text-neutral-800 dark:text-neutral-200"
+                role="heading"
+                aria-level="1"
+              >
+                Sign up
+              </div>
+              <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                Already have an account?
+                <button
+                  class="rounded-lg p-1 font-medium text-brand-600 decoration-2 ring-zinc-500 outline-hidden hover:underline hover:text-brand-700 focus-visible:ring-3 dark:text-brand-300 dark:ring-zinc-200 dark:focus:outline-hidden"
+                  data-hs-overlay="#showcase-login-modal"
+                >
+                  Sign in here
+                </button>
+              </p>
+            </div>
+            
+            <div class="mt-5">
+              <button class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-neutral-200 bg-white text-neutral-800 shadow-sm hover:bg-neutral-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+                <svg class="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
+                  <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4"/>
+                  <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853"/>
+                  <path d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z" fill="#FBBC05"/>
+                  <path d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z" fill="#EB4335"/>
+                </svg>
+                Sign up with Google
+              </button>
+              
+              <div
+                class="flex items-center py-3 text-xs text-neutral-400 uppercase before:me-6 before:flex-[1_1_0%] before:border-t before:border-neutral-200 after:ms-6 after:flex-[1_1_0%] after:border-t after:border-neutral-200 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600"
+              >
+                Or
+              </div>
+              
+              <form>
+                <div class="grid gap-y-4">
+                  <div>
+                    <label for="showcase-register-email" class="mb-2 block text-sm text-neutral-800 dark:text-neutral-200">Email address</label>
+                    <input
+                      type="email"
+                      id="showcase-register-email"
+                      name="email"
+                      class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 focus:border-neutral-200 focus:outline-hidden focus:ring-3 focus:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-700/30 dark:text-neutral-300 dark:focus:ring-1"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label for="showcase-register-password" class="mb-2 block text-sm text-neutral-800 dark:text-neutral-200">Password</label>
+                    <input
+                      type="password"
+                      id="showcase-register-password"
+                      name="password"
+                      class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 focus:border-neutral-200 focus:outline-hidden focus:ring-3 focus:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-700/30 dark:text-neutral-300 dark:focus:ring-1"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label for="showcase-confirm-password" class="mb-2 block text-sm text-neutral-800 dark:text-neutral-200">Confirm Password</label>
+                    <input
+                      type="password"
+                      id="showcase-confirm-password"
+                      name="confirm-password"
+                      class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 focus:border-neutral-200 focus:outline-hidden focus:ring-3 focus:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-700/30 dark:text-neutral-300 dark:focus:ring-1"
+                      required
+                    />
+                  </div>
+                  
+                  <div class="flex items-center">
+                    <div class="flex">
+                      <input
+                        id="showcase-register-terms"
+                        name="terms-agree"
+                        type="checkbox"
+                        class="mt-0.5 shrink-0 rounded-sm border-neutral-200 text-neutral-600 focus:ring-brand-400 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-brand-400 dark:checked:bg-brand-400 dark:focus:ring-offset-neutral-800"
+                      />
+                    </div>
+                    <div class="ms-3">
+                      <label for="showcase-register-terms" class="text-sm text-neutral-800 dark:text-neutral-200">
+                        I accept the 
+                        <a class="font-medium text-brand-400 decoration-2 hover:underline dark:text-brand-400 dark:focus:outline-hidden" href="#">
+                          Terms and Conditions
+                        </a>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    Sign up
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Showcase Recover Modal -->
+  <div
+    id="showcase-recover-modal"
+    class="hs-overlay absolute start-0 top-0 z-50 hidden h-full w-full hs-overlay-backdrop-open:bg-neutral-900/90"
+  >
+    <div
+      class="m-3 mt-0 opacity-0 transition-all ease-out hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 sm:mx-auto sm:w-full sm:max-w-lg"
+    >
+      <div class="mx-auto w-full max-w-md p-6">
+        <div
+          class="mt-7 rounded-xl border border-neutral-200 bg-neutral-100 shadow-xs dark:border-neutral-700 dark:bg-neutral-800"
+        >
+          <!-- Close button -->
+          <div class="flex justify-end p-4 pb-0">
+            <button
+              type="button"
+              class="flex h-7 w-7 items-center justify-center rounded-full border border-transparent text-sm font-semibold text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200"
+              data-hs-overlay="#showcase-recover-modal"
+            >
+              <span class="sr-only">Close</span>
+              <svg
+                class="h-4 w-4 flex-shrink-0"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m18 6-12 12"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="p-4 pt-0 sm:p-7 sm:pt-0">
+            <div class="text-center">
+              <div
+                class="block text-2xl font-bold text-neutral-800 dark:text-neutral-200"
+                role="heading"
+                aria-level="1"
+              >
+                Forgot password?
+              </div>
+              <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                Remember your password?
+                <button
+                  class="rounded-lg p-1 font-medium text-brand-600 decoration-2 outline-hidden ring-zinc-500 hover:underline hover:text-brand-700 focus-visible:ring-3 dark:text-brand-300 dark:ring-zinc-200 dark:focus:outline-hidden"
+                  data-hs-overlay="#showcase-login-modal"
+                >
+                  Sign in here
+                </button>
+              </p>
+            </div>
+            
+            <div class="mt-5">
+              <form>
+                <div class="grid gap-y-4">
+                  <div>
+                    <label for="showcase-recover-email" class="mb-2 block text-sm text-neutral-800 dark:text-neutral-200">Email address</label>
+                    <input
+                      type="email"
+                      id="showcase-recover-email"
+                      name="email"
+                      class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 focus:border-neutral-200 focus:outline-hidden focus:ring-3 focus:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-700/30 dark:text-neutral-300 dark:focus:ring-1"
+                      required
+                    />
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    Reset password
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Initialize Preline UI components -->
+  <script>
+    // Wait for the page to load and then initialize Preline components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if HSStaticMethods is available (Preline UI)
+      if (typeof window.HSStaticMethods !== 'undefined') {
+        // Re-initialize all Preline components
+        window.HSStaticMethods.autoInit();
+      }
+    });
+  </script>
+</MainLayout>
