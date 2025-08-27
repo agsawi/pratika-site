@@ -101,6 +101,12 @@ const appleTouchIcon = await getImage({
   content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"
 />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+{/* Prevent search engine indexing */}
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+
 <link rel="canonical" href={canonical} />
 <Fragment set:html={alternateLanguageLinks} />
 
@@ -124,10 +130,9 @@ const appleTouchIcon = await getImage({
 <meta name="twitter:description" content={ogDescription} />
 <meta name="twitter:image" content={socialImage} />
 
-{/* Links to the webmanifest and sitemap */}
+{/* Links to the webmanifest */}
 <link rel="manifest" href="/manifest.json" />
-{/* https://docs.astro.build/en/guides/integrations-guide/sitemap/ */}
-<link rel="sitemap" href="/sitemap-index.xml" />
+{/* Sitemap link removed to prevent search engine discovery */}
 
 {/* Links for favicons */}
 <link href="/favicon.ico" rel="icon" sizes="any" type="image/x-icon" />
