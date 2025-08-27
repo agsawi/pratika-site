@@ -1,0 +1,33 @@
+---
+// Simple test component to verify Tailwind CSS integration
+---
+
+<div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+    Tailwind CSS Integration Test
+  </h2>
+  
+  <div class="space-y-4">
+    <div class="p-4 bg-blue-100 dark:bg-blue-900 rounded-md">
+      <p class="text-blue-800 dark:text-blue-200">
+        This is a test component to verify Tailwind CSS is working correctly.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="p-3 bg-green-100 dark:bg-green-900 rounded text-center">
+        <span class="text-green-800 dark:text-green-200 font-semibold">Success</span>
+      </div>
+      <div class="p-3 bg-yellow-100 dark:bg-yellow-900 rounded text-center">
+        <span class="text-yellow-800 dark:text-yellow-200 font-semibold">Warning</span>
+      </div>
+      <div class="p-3 bg-red-100 dark:bg-red-900 rounded text-center">
+        <span class="text-red-800 dark:text-red-200 font-semibold">Error</span>
+      </div>
+    </div>
+    
+    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors">
+      Test Button
+    </button>
+  </div>
+</div>

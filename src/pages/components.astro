@@ -24,7 +24,7 @@ import RightSection from "@/components/ui/blocks/RightSection.astro";
 import StatsBig from "@/components/ui/blocks/StatsBig.astro";
 import StatsGrid from "@/components/ui/blocks/StatsGrid.astro";
 import StatsSmall from "@/components/ui/blocks/StatsSmall.astro";
-import TabContent from "@/components/ui/blocks/TabContent.astro";
+// TabContent is not used in this showcase
 import TabNav from "@/components/ui/blocks/TabNav.astro";
 
 // Import UI Components - Buttons
@@ -51,8 +51,7 @@ import CardWide from "@/components/ui/cards/CardWide.astro";
 import PostFeedback from "@/components/ui/feedback/PostFeedback.astro";
 
 // Import UI Components - Forms
-import LoginModal from "@/components/ui/forms/LoginModal.astro";
-import RegisterModal from "@/components/ui/forms/RegisterModal.astro";
+// LoginModal and RegisterModal are implemented inline in this showcase
 import RecoverModal from "@/components/ui/forms/RecoverModal.astro";
 
 // Import UI Components - Form Inputs
@@ -192,7 +191,7 @@ import constructionImage from "@/images/construction-image.avif";
 import dashboardImage from "@/images/dashboard-image.avif";
 import featuresImage from "@/images/features-image.avif";
 import productImage1 from "@/images/product-image-1.avif";
-import productImage2 from "@/images/product-image-2.avif";
+// productImage2 is not used in this showcase
 
 // Import partners data
 import { partnersData } from "@/data_files/constants";
@@ -384,22 +383,6 @@ const sampleSectionProps = {
       "Scalable infrastructure for growth",
       "Real-time collaboration tools"
     ],
-    mainStatTitle: "99.9%",
-    mainStatSubTitle: "Uptime Guarantee",
-    stats: [
-      {
-        stat: "10k+",
-        description: "Active Users"
-      },
-      {
-        stat: "24/7",
-        description: "Support Available"
-      },
-      {
-        stat: "150+",
-        description: "Countries Served"
-      }
-    ],
     mainStatTitle: "98%",
     mainStatSubTitle: "of our users report improved productivity within the first month",
     stats: [
@@ -462,33 +445,7 @@ const sampleSectionProps = {
     company: "TechCorp Inc.",
     rating: 5
   },
-  pricing: {
-    title: "Simple, Transparent Pricing",
-    subTitle: "Choose the plan that works best for your team",
-    plans: [
-      {
-        name: "Starter",
-        price: "$29",
-        period: "per month",
-        features: ["Up to 5 projects", "Basic analytics", "Email support"],
-        highlighted: false
-      },
-      {
-        name: "Professional", 
-        price: "$79",
-        period: "per month",
-        features: ["Unlimited projects", "Advanced analytics", "Priority support", "API access"],
-        highlighted: true
-      },
-      {
-        name: "Enterprise",
-        price: "Custom",
-        period: "contact us",
-        features: ["Custom solutions", "Dedicated support", "SLA guarantee", "On-premise option"],
-        highlighted: false
-      }
-    ]
-  },
+
   clients: {
     title: "Trusted by Industry Leaders",
     subTitle: "Join thousands of companies that rely on our platform for their success."
@@ -1254,7 +1211,11 @@ const sampleSectionProps = {
               <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/feedback/PostFeedback.astro</p>
             </div>
             <div class="max-w-md">
-              <PostFeedback />
+              <PostFeedback 
+                title="Was this helpful?"
+                firstChoice="Yes, helpful"
+                secondChoice="No, not helpful"
+              />
             </div>
           </div>
         </div>
@@ -1530,7 +1491,7 @@ const sampleSectionProps = {
               <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono">src/components/ui/forms/input/EmailContactInput.astro</p>
             </div>
             <div class="max-w-sm">
-              <EmailContactInput />
+              <EmailContactInput id="email-contact-demo" />
             </div>
           </div>
 
@@ -1565,7 +1526,7 @@ const sampleSectionProps = {
                   <Icon name={iconName} />
                   <div class="text-center">
                     <p class="text-xs font-medium text-neutral-800 dark:text-neutral-200">{iconName}</p>
-                    <p class="text-xs text-neutral-500 dark:text-neutral-400">{sampleIconData.iconDescriptions[iconName]}</p>
+                    <p class="text-xs text-neutral-500 dark:text-neutral-400">{sampleIconData.iconDescriptions[iconName as keyof typeof sampleIconData.iconDescriptions]}</p>
                   </div>
                 </div>
               ))}
@@ -1673,11 +1634,11 @@ const sampleSectionProps = {
               {sampleStarData.ratings.map((item) => (
                 <div class="flex items-center gap-3">
                   <div class="flex items-center">
-                    {Array.from({ length: Math.floor(item.rating) }, (_, i) => (
+                    {Array.from({ length: Math.floor(item.rating) }, () => (
                       <FullStar />
                     ))}
                     {item.rating % 1 !== 0 && <HalfStar />}
-                    {Array.from({ length: 5 - Math.ceil(item.rating) }, (_, i) => (
+                    {Array.from({ length: 5 - Math.ceil(item.rating) }, () => (
                       <div class="h-4 w-4 text-neutral-300 dark:text-neutral-600">
                         <svg class="h-4 w-4" width="51" height="51" viewBox="0 0 51 51" fill="none">
                           <path d="M27.0352 1.6307L33.9181 16.3633C34.2173 16.6768 34.5166 16.9903 34.8158 16.9903L50.0779 19.1845C50.9757 19.1845 51.275 20.4383 50.6764 21.0652L39.604 32.3498C39.3047 32.6632 39.3047 32.9767 39.3047 33.2901L41.998 49.2766C42.2973 50.217 41.1002 50.8439 40.5017 50.5304L26.4367 43.3208C26.1375 43.3208 25.8382 43.3208 25.539 43.3208L11.7732 50.8439C10.8754 51.1573 9.97763 50.5304 10.2769 49.59L12.9702 33.6036C12.9702 33.2901 12.9702 32.9767 12.671 32.6632L1.29923 21.0652C0.700724 20.4383 0.999979 19.4979 1.89775 19.4979L17.1598 17.3037C17.459 17.3037 17.7583 16.9903 18.0575 16.6768L24.9404 1.6307C25.539 0.69032 26.736 0.69032 27.0352 1.6307Z" fill="currentColor"/>
@@ -1849,12 +1810,7 @@ const sampleSectionProps = {
               <HeroSectionAlt 
                 title="Alternative Hero Design"
                 subTitle="Experience a different approach to hero sections with this alternative layout and styling."
-                primaryBtn="Start Free Trial"
-                primaryBtnURL="#"
-                secondaryBtn="View Demo"
-                secondaryBtnURL="#"
-                src={constructionImage}
-                alt="Alternative hero section image"
+                url="#"
               />
             </div>
           </div>
@@ -2441,9 +2397,9 @@ const sampleSectionProps = {
     // Wait for the page to load and then initialize Preline components
     document.addEventListener('DOMContentLoaded', function() {
       // Check if HSStaticMethods is available (Preline UI)
-      if (typeof window.HSStaticMethods !== 'undefined') {
+      if (typeof (window as any).HSStaticMethods !== 'undefined') {
         // Re-initialize all Preline components
-        window.HSStaticMethods.autoInit();
+        (window as any).HSStaticMethods.autoInit();
       }
     });
   </script>
