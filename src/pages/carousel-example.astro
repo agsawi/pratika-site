@@ -1,0 +1,83 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import HeroCarousel from "../components/sections/misc/HeroCarousel.astro";
+import {
+    heroCarouselSlides,
+    portfolioCarouselSlides,
+} from "../data_files/carousel-data";
+import { SITE } from "../data_files/constants";
+---
+
+<MainLayout title={`Carousel Examples | ${SITE.title}`}>
+    <!-- Hero Carousel with autoplay -->
+    <HeroCarousel slides={heroCarouselSlides} autoplay={true} interval={4000} />
+
+    <!-- Content Section -->
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="mb-16 text-center">
+            <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+                Carousel Component Examples
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300">
+                Different variations of the imported Preline carousel component
+            </p>
+        </div>
+
+        <!-- Smaller Portfolio Carousel -->
+        <div class="mb-16">
+            <h2
+                class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white"
+            >
+                Portfolio Showcase
+            </h2>
+            <HeroCarousel
+                slides={portfolioCarouselSlides}
+                height="h-96"
+                showArrows={true}
+                autoplay={false}
+            />
+        </div>
+
+        <!-- Usage Instructions -->
+        <div class="rounded-lg bg-gray-50 p-8 dark:bg-gray-800">
+            <h3 class="mb-4 text-xl font-semibold">
+                How to Use This Component
+            </h3>
+            <div class="space-y-4 text-sm">
+                <div>
+                    <h4 class="mb-2 font-medium">1. Import the component:</h4>
+                    <pre
+                        class="overflow-x-auto rounded bg-gray-100 p-3 text-xs dark:bg-gray-700"><code>import HeroCarousel from "../components/sections/misc/HeroCarousel.astro";</code></pre>
+                </div>
+
+                <div>
+                    <h4 class="mb-2 font-medium">
+                        2. Prepare your slide data:
+                    </h4>
+                    <pre
+                        class="overflow-x-auto rounded bg-gray-100 p-3 text-xs dark:bg-gray-700"><code>const slides = [
+  &#123;
+    id: "slide-1",
+    backgroundImage: "/path/to/image.jpg",
+    brand: "Your Brand",
+    title: "Your Title",
+    buttonText: "Call to Action",
+    buttonUrl: "/your-link"
+  &#125;
+];</code></pre>
+                </div>
+
+                <div>
+                    <h4 class="mb-2 font-medium">3. Use the component:</h4>
+                    <pre
+                        class="overflow-x-auto rounded bg-gray-100 p-3 text-xs dark:bg-gray-700"><code>&lt;HeroCarousel 
+  slides=&#123;slides&#125;
+  autoplay=&#123;true&#125;
+  interval=&#123;5000&#125;
+  height="h-96"
+/&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</MainLayout>
