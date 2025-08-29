@@ -1,0 +1,181 @@
+---
+import Icon from "../icons/Icon.astro";
+import { pratikaSegmentsData } from "../../../data_files/pratika_navigation";
+import type { MegaMenuItem } from "../../../data_files/pratika_navigation";
+
+// Define TypeScript interface for the properties
+interface Props {
+  name: string;
+  url: string;
+  items: MegaMenuItem[];
+}
+
+// Destructure the properties from Astro.props
+const { name, url, items } = Astro.props;
+
+// Use the provided items or fall back to the default segments data
+const segmentsData = items || pratikaSegmentsData;
+
+// Split segments into columns for grid layout (2 columns for better readability)
+const firstColumn = segmentsData.slice(0, 3);
+const secondColumn = segmentsData.slice(3, 6);
+---
+
+<!--
+Reusable mega menu component for Pratika market segments navigation.
+Uses Preline UI hs-dropdown classes for mega menu functionality.
+Displays segments in a responsive grid layout with icons and descriptions.
+Enhanced mobile support with touch-friendly interactions.
+-->
+<div
+  class="hs-dropdown py-3 [--adaptive:none] [--strategy:static] md:px-3 md:py-4 md:[--strategy:absolute] md:[--trigger:hover]"
+  data-hs-dropdown-auto-close="outside"
+>
+  <!-- Main dropdown trigger button -->
+  <button
+    type="button"
+    class="flex w-full items-center justify-between text-base font-medium text-neutral-600 outline-hidden ring-zinc-500 hover:text-neutral-500 focus-visible:ring-3 dark:text-neutral-400 dark:ring-zinc-200 dark:hover:text-neutral-500 dark:focus:outline-hidden md:justify-start md:text-sm 2xl:text-base"
+    aria-expanded="false"
+    aria-haspopup="menu"
+    aria-label={`${name} menu`}
+    data-hs-dropdown-toggle
+  >
+    <span>{name}</span>
+    <Icon name="chevronDown" class="ml-1 transition-transform duration-200 hs-dropdown-open:rotate-180" aria-hidden="true" />
+  </button>
+
+  <!-- Mega menu dropdown -->
+  <div
+    class="hs-dropdown-menu start-0 top-full z-50 hidden w-full min-w-60 rounded-2xl bg-neutral-50 py-2 opacity-0 transition-[opacity,margin] duration-[0.1ms] before:absolute before:-top-5 before:start-0 before:h-5 before:w-full hs-dropdown-open:opacity-100 dark:divide-neutral-700 dark:bg-neutral-800 md:min-w-[500px] md:p-4 md:shadow-2xl md:duration-[150ms] lg:min-w-[600px]"
+    role="menu"
+    aria-orientation="vertical"
+    aria-label={`${name} submenu`}
+  >
+    <!-- Grid layout for segments -->
+    <div class="gap-4 md:grid md:grid-cols-2 lg:grid-cols-2">
+      <!-- First column -->
+      <div class="mx-1 flex flex-col md:mx-0">
+        {
+          firstColumn.map((segment) => (
+            <a
+              href={segment.url}
+              data-astro-prefetch
+              class="group flex gap-x-5 rounded-lg p-4 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-hidden dark:text-neutral-200 dark:hover:bg-neutral-500/10 dark:focus:bg-neutral-500/10"
+              role="menuitem"
+              tabindex="-1"
+              aria-label={`${segment.name}. ${segment.description}`}
+            >
+              <!-- Segment icon -->
+              <Icon name={segment.icon || "building"} class="mt-1 size-5 shrink-0 text-brand-400 dark:text-brand-300" />
+              <div class="grow">
+                <p class="font-medium text-neutral-800 dark:text-neutral-200">
+                  {segment.name}
+                </p>
+                <p class="text-sm text-neutral-500 group-hover:text-neutral-800 dark:text-neutral-400 dark:group-hover:text-neutral-200">
+                  {segment.description}
+                </p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Second column -->
+      <div class="mx-1 flex flex-col md:mx-0">
+        {
+          secondColumn.map((segment) => (
+            <a
+              href={segment.url}
+              data-astro-prefetch
+              class="group flex gap-x-5 rounded-lg p-4 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-hidden dark:text-neutral-200 dark:hover:bg-neutral-500/10 dark:focus:bg-neutral-500/10"
+              role="menuitem"
+              tabindex="-1"
+              aria-label={`${segment.name}. ${segment.description}`}
+            >
+              <!-- Segment icon -->
+              <Icon name={segment.icon || "building"} class="mt-1 size-5 shrink-0 text-brand-400 dark:text-brand-300" />
+              <div class="grow">
+                <p class="font-medium text-neutral-800 dark:text-neutral-200">
+                  {segment.name}
+                </p>
+                <p class="text-sm text-neutral-500 group-hover:text-neutral-800 dark:text-neutral-400 dark:group-hover:text-neutral-200">
+                  {segment.description}
+                </p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Optional: View all segments link -->
+    <div class="mt-4 border-t border-neutral-200 pt-4 dark:border-neutral-700">
+      <a
+        href={url}
+        data-astro-prefetch
+        class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium text-brand-600 hover:bg-neutral-100 hover:text-brand-700 focus:bg-neutral-100 focus:text-brand-700 focus:outline-hidden dark:text-brand-400 dark:hover:bg-neutral-500/10 dark:hover:text-brand-300 dark:focus:bg-neutral-500/10 dark:focus:text-brand-300"
+        role="menuitem"
+        tabindex="-1"
+        aria-label="Ver todos os segmentos"
+      >
+        <Icon name="arrowRight" class="size-4 shrink-0 transition duration-300 group-hover:translate-x-1" />
+        Ver todos os segmentos
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get current URL for active state highlighting
+    const currentUrl = window.location.pathname;
+    
+    // Find all mega menu links and check for active states
+    const megaMenuLinks = document.querySelectorAll('.hs-dropdown a[href]');
+    
+    megaMenuLinks.forEach((link) => {
+      const linkUrl = link.getAttribute('href');
+      
+      // Check if current page matches this mega menu item
+      if (linkUrl && currentUrl === linkUrl) {
+        // Highlight the parent dropdown button
+        const dropdown = link.closest('.hs-dropdown');
+        const dropdownButton = dropdown?.querySelector('button');
+        
+        if (dropdownButton) {
+          dropdownButton.classList.remove(
+            "text-neutral-600",
+            "dark:text-neutral-400",
+            "hover:text-neutral-500",
+            "dark:hover:text-neutral-500"
+          );
+          dropdownButton.classList.add("text-brand-400", "dark:text-brand-300");
+          dropdownButton.setAttribute("aria-current", "page");
+        }
+        
+        // Also highlight the specific mega menu item
+        link.classList.remove(
+          "text-neutral-500",
+          "dark:text-neutral-400"
+        );
+        link.classList.add("text-brand-400", "dark:text-brand-300");
+        link.setAttribute("aria-current", "page");
+      }
+    });
+
+    // Check if current page matches the main segments URL
+    if (currentUrl === '/segmentos') {
+      const segmentsDropdown = document.querySelector('.hs-dropdown button[aria-haspopup="true"]');
+      if (segmentsDropdown && segmentsDropdown.textContent?.trim() === 'Segmentos Atendidos') {
+        segmentsDropdown.classList.remove(
+          "text-neutral-600",
+          "dark:text-neutral-400",
+          "hover:text-neutral-500",
+          "dark:hover:text-neutral-500"
+        );
+        segmentsDropdown.classList.add("text-brand-400", "dark:text-brand-300");
+        segmentsDropdown.setAttribute("aria-current", "page");
+      }
+    }
+  });
+</script>

@@ -1,11 +1,8 @@
-// An array of links for navigation bar
-const navBarLinks = [
-  { name: "Home", url: "/" },
-  { name: "Products", url: "/products" },
-  { name: "Services", url: "/services" },
-  { name: "Blog", url: "/blog" },
-  { name: "Contact", url: "/contact" },
-];
+// Import Pratika navigation structure
+import { pratikaNavBarLinks, type NavBarItem } from "../data_files/pratika_navigation";
+
+// Use Pratika navigation structure
+const navBarLinks: NavBarItem[] = pratikaNavBarLinks;
 // An array of links for footer
 const footerLinks = [
   {

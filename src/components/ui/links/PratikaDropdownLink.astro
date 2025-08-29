@@ -1,0 +1,102 @@
+---
+import Icon from "../icons/Icon.astro";
+import type { DropdownItem } from "../../../data_files/pratika_navigation";
+
+// Define TypeScript interface for the properties
+interface Props {
+  name: string;
+  items: DropdownItem[];
+}
+
+// Destructure the properties from Astro.props
+const { name, items } = Astro.props;
+---
+
+<!--
+Reusable dropdown link component for Pratika navigation.
+Uses Preline UI hs-dropdown classes for dropdown functionality.
+Supports both hover (desktop) and click (mobile) interactions.
+Enhanced mobile support with touch-friendly interactions.
+-->
+<div
+  class="hs-dropdown py-3 [--adaptive:none] [--strategy:static] md:px-3 md:py-4 md:[--strategy:absolute] md:[--trigger:hover]"
+  data-hs-dropdown-auto-close="outside"
+>
+  <!-- Main dropdown trigger button -->
+  <button
+    type="button"
+    class="flex w-full items-center justify-between text-base font-medium text-neutral-600 outline-hidden ring-zinc-500 hover:text-neutral-500 focus-visible:ring-3 dark:text-neutral-400 dark:ring-zinc-200 dark:hover:text-neutral-500 dark:focus:outline-hidden md:justify-start md:text-sm 2xl:text-base"
+    aria-expanded="false"
+    aria-haspopup="menu"
+    aria-label={`${name} menu`}
+    data-hs-dropdown-toggle
+  >
+    <span>{name}</span>
+    <Icon name="chevronDown" class="ml-1 transition-transform duration-200 hs-dropdown-open:rotate-180" aria-hidden="true" />
+  </button>
+
+  <!-- Dropdown menu -->
+  <div
+    class="hs-dropdown-menu top-full z-50 hidden w-full min-w-60 rounded-2xl bg-neutral-50 py-2 opacity-0 transition-[opacity,margin] duration-[0.1ms] before:absolute before:-top-5 before:start-0 before:h-5 before:w-full hs-dropdown-open:opacity-100 dark:bg-neutral-800 md:w-auto md:shadow-2xl md:duration-[150ms]"
+    role="menu"
+    aria-orientation="vertical"
+    aria-label={`${name} submenu`}
+  >
+    <div class="flex flex-col">
+      {
+        items.map((item) => (
+          <a
+            href={item.url}
+            data-astro-prefetch
+            class="group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 focus:bg-neutral-100 focus:text-neutral-900 focus:outline-hidden dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-neutral-100 dark:focus:bg-neutral-700 dark:focus:text-neutral-100"
+            role="menuitem"
+            tabindex="-1"
+            aria-label={item.name}
+          >
+            {item.name}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get current URL for active state highlighting
+    const currentUrl = window.location.pathname;
+    
+    // Find all dropdown links and check for active states
+    const dropdownLinks = document.querySelectorAll('.hs-dropdown a[href]');
+    
+    dropdownLinks.forEach((link) => {
+      const linkUrl = link.getAttribute('href');
+      
+      // Check if current page matches this dropdown item
+      if (linkUrl && currentUrl === linkUrl) {
+        // Highlight the parent dropdown button
+        const dropdown = link.closest('.hs-dropdown');
+        const dropdownButton = dropdown?.querySelector('button');
+        
+        if (dropdownButton) {
+          dropdownButton.classList.remove(
+            "text-neutral-600",
+            "dark:text-neutral-400",
+            "hover:text-neutral-500",
+            "dark:hover:text-neutral-500"
+          );
+          dropdownButton.classList.add("text-brand-400", "dark:text-brand-300");
+          dropdownButton.setAttribute("aria-current", "page");
+        }
+        
+        // Also highlight the specific dropdown item
+        link.classList.remove(
+          "text-neutral-700",
+          "dark:text-neutral-300"
+        );
+        link.classList.add("text-brand-400", "dark:text-brand-300");
+        link.setAttribute("aria-current", "page");
+      }
+    });
+  });
+</script>

@@ -1,0 +1,51 @@
+---
+// Destructure the properties from Astro.props
+const { title = "Solicitar Orçamento", url = "/orcamento", noArrow } = Astro.props;
+
+// Define TypeScript interface for the properties
+interface Props {
+  title?: string;
+  url?: string;
+  noArrow?: boolean;
+}
+
+// Define CSS classes for styling the Pratika CTA button
+const baseClasses =
+  "group inline-flex items-center justify-center gap-x-2 rounded-lg px-6 py-3 text-sm font-bold text-white ring-brand-300 transition-all duration-300 focus-visible:ring-3 outline-hidden";
+const borderClasses = "border border-transparent";
+const bgColorClasses =
+  "bg-brand-600 hover:bg-brand-700 active:bg-brand-800 dark:bg-brand-600 dark:hover:bg-brand-700 dark:active:bg-brand-800";
+const shadowClasses = "shadow-lg hover:shadow-xl";
+const disableClasses = "disabled:pointer-events-none disabled:opacity-50";
+const fontSizeClasses = "2xl:text-base";
+const ringClasses = "dark:ring-brand-200";
+const transformClasses = "hover:scale-105 active:scale-95";
+---
+
+<!-- Pratika CTA Button - Styled as a prominent call-to-action -->
+<a
+  class={`${baseClasses} ${borderClasses} ${bgColorClasses} ${shadowClasses} ${disableClasses} ${fontSizeClasses} ${ringClasses} ${transformClasses}`}
+  href={url}
+  role="button"
+  aria-label={`${title} - Abrir formulário de solicitação de orçamento`}
+>
+  {title}
+  <!-- Display the arrow based on the 'noArrow' property -->
+  {!noArrow && (
+    <svg
+      class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 5l7 7-7 7"
+      ></path>
+    </svg>
+  )}
+</a>

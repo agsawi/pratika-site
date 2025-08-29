@@ -2,17 +2,26 @@
 //Import relevant dependencies
 import ThemeIcon from "@components/ThemeIcon.astro";
 import NavLink from "@components/ui/links/NavLink.astro";
-import MegaMenuLink from "@components/ui/links/MegaMenuLink.astro";
-import Authentication from "../misc/Authentication.astro";
-import enStrings from "@utils/navigation.ts";
-import frStrings from "@utils/fr/navigation.ts";
+import PratikaDropdownLink from "@components/ui/links/PratikaDropdownLink.astro";
+import PratikaServicesMegaMenuLink from "@components/ui/links/PratikaServicesMegaMenuLink.astro";
+import PratikaSegmentsMegaMenuLink from "@components/ui/links/PratikaSegmentsMegaMenuLink.astro";
+import PratikaCTAButton from "@components/ui/buttons/PratikaCTAButton.astro";
 import BrandLogo from "@components/BrandLogo.astro";
-import LanguagePicker from "@components/ui/LanguagePicker.astro";
+import navigationData from "@utils/navigation.ts";
+import type { DropdownItem, MegaMenuItem } from "@/data_files/pratika_navigation";
 
-// Select the correct translation based on the page's lang prop:
-const strings = Astro.currentLocale === "fr" ? frStrings : enStrings;
-const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
+// Use Pratika navigation structure
+const { navBarLinks } = navigationData;
+const homeUrl = "/";
 ---
+
+<!-- Skip navigation link for accessibility -->
+<a
+  href="#main-content"
+  class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white focus:outline-hidden focus:ring-2 focus:ring-brand-400 focus:ring-offset-2"
+>
+  Pular para o conteúdo principal
+</a>
 
 <!-- Main header component -->
 <header
@@ -36,10 +45,11 @@ const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
       <div class="ml-auto mr-5 md:hidden">
         <button
           type="button"
-          class="hs-collapse-toggle flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-neutral-600 transition duration-300 hover:bg-neutral-200 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:outline-hidden"
+          class="hs-collapse-toggle flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-neutral-600 transition duration-300 hover:bg-neutral-200 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:outline-hidden focus:ring-2 focus:ring-brand-400 focus:ring-offset-2"
           data-hs-collapse="#navbar-collapse-with-animation"
           aria-controls="navbar-collapse-with-animation"
-          aria-label="Toggle navigation"
+          aria-label="Abrir menu de navegação"
+          aria-expanded="false"
         >
           <svg
             class="h-[1.25rem] w-[1.25rem] shrink-0 hs-collapse-open:hidden"
@@ -86,19 +96,22 @@ const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
       <div
         class="mt-5 flex flex-col gap-x-0 gap-y-4 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-x-4 md:gap-y-0 md:ps-7 lg:gap-x-7"
       >
-        <!-- Navigation links and Authentication component -->
+        <!-- Navigation links with Pratika components -->
         {
-          strings.navBarLinks.map((link) => {
-            if (link.name === "Services") {
-              return <MegaMenuLink />;
+          navBarLinks.map((link) => {
+            if (link.type === "dropdown" && link.items) {
+              return <PratikaDropdownLink name={link.name} items={link.items as DropdownItem[]} />;
+            } else if (link.type === "megamenu" && link.name === "Serviços" && link.items) {
+              return <PratikaServicesMegaMenuLink name={link.name} url={link.url} items={link.items as MegaMenuItem[]} />;
+            } else if (link.type === "megamenu" && link.name === "Segmentos Atendidos" && link.items) {
+              return <PratikaSegmentsMegaMenuLink name={link.name} url={link.url} items={link.items as MegaMenuItem[]} />;
+            } else if (link.type === "cta") {
+              return <PratikaCTAButton title={link.name} url={link.url} />;
             } else {
               return <NavLink url={link.url} name={link.name} />;
             }
           })
         }
-
-        <Authentication />
-        <LanguagePicker />
         <!-- ThemeIcon component specifically for larger screens -->
         <span class="hidden md:inline-block">
           <ThemeIcon />
@@ -212,3 +225,373 @@ const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
     });
   });
 </script>
+
+<!-- Mobile Navigation Enhancement Script -->
+<script>
+  import "@/assets/scripts/mobile-navigation.js";
+</script>
+
+<!-- Navigation Accessibility Enhancement Script -->
+<script>
+  import "@/assets/scripts/navigation-accessibility.js";
+</script>
+
+<!-- Dropdown Positioning Enhancement Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Enhanced dropdown positioning with viewport boundary detection
+    function adjustDropdownPosition(dropdown: Element): void {
+      const menu = dropdown.querySelector('.hs-dropdown-menu') as HTMLElement;
+      if (!menu) return;
+      
+      // Only adjust on desktop
+      if (window.innerWidth < 768) return;
+      
+      const rect = menu.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      
+      // Check if this is a mega menu (has start-0 class or min-w-[XXXpx] class)
+      const isMegaMenu = menu.classList.contains('start-0') || menu.classList.toString().includes('min-w-[');
+      
+      if (isMegaMenu) {
+        // Mega menu positioning - left aligned by default
+        // Check if mega menu goes off the right edge
+        if (rect.right > viewportWidth - 20) {
+          menu.style.left = 'auto';
+          menu.style.right = '0';
+          menu.style.transform = 'none';
+        }
+        
+        // Check if mega menu goes off the left edge
+        if (rect.left < 20) {
+          menu.style.left = '0';
+          menu.style.right = 'auto';
+          menu.style.transform = 'none';
+        }
+      } else {
+        // Simple dropdown positioning - center aligned by default
+        // Check if dropdown goes off the right edge
+        if (rect.right > viewportWidth - 20) {
+          menu.style.left = 'auto';
+          menu.style.right = '0';
+          menu.style.transform = 'none';
+        }
+        
+        // Check if dropdown goes off the left edge  
+        if (rect.left < 20) {
+          menu.style.left = '0';
+          menu.style.right = 'auto';
+          menu.style.transform = 'none';
+        }
+      }
+      
+      // Check if dropdown goes off the bottom edge (applies to both types)
+      if (rect.bottom > viewportHeight - 20) {
+        menu.style.top = 'auto';
+        menu.style.bottom = '100%';
+        menu.style.marginBottom = '0.5rem';
+        menu.style.marginTop = '0';
+      }
+    }
+    
+    // Apply positioning adjustments when dropdowns open
+    const dropdowns = document.querySelectorAll('.hs-dropdown');
+    
+    dropdowns.forEach(dropdown => {
+      const button = dropdown.querySelector('[data-hs-dropdown-toggle]') as HTMLElement;
+      const menu = dropdown.querySelector('.hs-dropdown-menu') as HTMLElement;
+      
+      if (!button || !menu) return;
+      
+      // Handle dropdown open events
+      button.addEventListener('click', function() {
+        // Small delay to ensure dropdown is rendered
+        setTimeout(() => {
+          if (dropdown.classList.contains('hs-dropdown-open')) {
+            adjustDropdownPosition(dropdown);
+          }
+        }, 10);
+      });
+      
+      // Handle hover events for desktop
+      if (window.innerWidth >= 768) {
+        dropdown.addEventListener('mouseenter', function() {
+          setTimeout(() => {
+            if (dropdown.classList.contains('hs-dropdown-open')) {
+              adjustDropdownPosition(dropdown);
+            }
+          }, 10);
+        });
+      }
+    });
+    
+    // Recalculate positions on window resize
+    let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const openDropdowns = document.querySelectorAll('.hs-dropdown-open');
+        openDropdowns.forEach(adjustDropdownPosition);
+      }, 100);
+    });
+    
+    // Enhanced keyboard navigation for dropdowns
+    document.addEventListener('keydown', function(e: KeyboardEvent) {
+      const activeDropdown = document.querySelector('.hs-dropdown-open');
+      if (!activeDropdown) return;
+      
+      const menu = activeDropdown.querySelector('.hs-dropdown-menu');
+      if (!menu) return;
+      
+      const menuItems = menu.querySelectorAll('a[role="menuitem"]') as NodeListOf<HTMLElement>;
+      const currentFocus = document.activeElement as HTMLElement;
+      
+      if (e.key === 'Escape') {
+        // Close dropdown and return focus to trigger
+        const button = activeDropdown.querySelector('[data-hs-dropdown-toggle]') as HTMLElement;
+        if (button) {
+          button.click();
+          button.focus();
+        }
+        e.preventDefault();
+      } else if (e.key === 'ArrowDown') {
+        // Move to next menu item
+        const currentIndex = Array.from(menuItems).indexOf(currentFocus);
+        if (currentIndex >= 0) {
+          const nextIndex = currentIndex < menuItems.length - 1 ? currentIndex + 1 : 0;
+          menuItems[nextIndex].focus();
+        }
+        e.preventDefault();
+      } else if (e.key === 'ArrowUp') {
+        // Move to previous menu item
+        const currentIndex = Array.from(menuItems).indexOf(currentFocus);
+        if (currentIndex >= 0) {
+          const prevIndex = currentIndex > 0 ? currentIndex - 1 : menuItems.length - 1;
+          menuItems[prevIndex].focus();
+        }
+        e.preventDefault();
+      } else if (e.key === 'Home') {
+        // Move to first menu item
+        if (menuItems.length > 0) {
+          menuItems[0].focus();
+        }
+        e.preventDefault();
+      } else if (e.key === 'End') {
+        // Move to last menu item
+        if (menuItems.length > 0) {
+          menuItems[menuItems.length - 1].focus();
+        }
+        e.preventDefault();
+      }
+    });
+  });
+</script>
+
+<!-- Enhanced Navigation Styles -->
+<style>
+  /* Dropdown Alignment and Z-Index Fixes */
+  .hs-dropdown {
+    position: relative;
+  }
+  
+  /* Enhanced dropdown positioning for desktop */
+  @media (min-width: 768px) {
+    /* Simple dropdown alignment - center with trigger button (only for dropdowns without start-0) */
+    .hs-dropdown-menu:not(.start-0):not([class*="min-w-[500px"]):not([class*="min-w-[600px"]):not([class*="min-w-[720px"]) {
+      position: absolute !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      top: calc(100% + 0.5rem) !important;
+      z-index: 50 !important;
+    }
+    
+    /* Mega menu alignment - left align with proper spacing (has start-0 class) */
+    .hs-dropdown-menu.start-0,
+    .hs-dropdown-menu[class*="min-w-[500px"],
+    .hs-dropdown-menu[class*="min-w-[600px"],
+    .hs-dropdown-menu[class*="min-w-[720px"] {
+      position: absolute !important;
+      left: 0 !important;
+      top: calc(100% + 0.5rem) !important;
+      z-index: 50 !important;
+      transform: none !important;
+    }
+    
+    /* Prevent mega menus from going off-screen on the right */
+    .hs-dropdown:nth-last-child(-n+3) .hs-dropdown-menu[class*="min-w-"] {
+      left: auto !important;
+      right: 0 !important;
+    }
+    
+    /* Ensure proper stacking context */
+    .hs-dropdown-open {
+      z-index: 51 !important;
+    }
+    
+    /* Smooth positioning transitions */
+    .hs-dropdown-menu {
+      transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out, visibility 0.15s ease-in-out !important;
+    }
+    
+    /* Simple dropdown animations - center aligned (only for dropdowns without start-0) */
+    .hs-dropdown-menu:not(.start-0):not([class*="min-w-[500px"]):not([class*="min-w-[600px"]):not([class*="min-w-[720px"]) {
+      transform-origin: top center;
+    }
+    
+    .hs-dropdown-menu:not(.start-0):not([class*="min-w-[500px"]):not([class*="min-w-[600px"]):not([class*="min-w-[720px"]):not(.hs-dropdown-open) {
+      transform: translateX(-50%) translateY(-8px) scale(0.95) !important;
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .hs-dropdown-open .hs-dropdown-menu:not(.start-0):not([class*="min-w-[500px"]):not([class*="min-w-[600px"]):not([class*="min-w-[720px"]) {
+      transform: translateX(-50%) translateY(0) scale(1) !important;
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* Mega menu animations - left aligned (has start-0 class or min-w classes) */
+    .hs-dropdown-menu.start-0,
+    .hs-dropdown-menu[class*="min-w-[500px"],
+    .hs-dropdown-menu[class*="min-w-[600px"],
+    .hs-dropdown-menu[class*="min-w-[720px"] {
+      transform-origin: top left;
+    }
+    
+    .hs-dropdown-menu.start-0:not(.hs-dropdown-open),
+    .hs-dropdown-menu[class*="min-w-[500px"]:not(.hs-dropdown-open),
+    .hs-dropdown-menu[class*="min-w-[600px"]:not(.hs-dropdown-open),
+    .hs-dropdown-menu[class*="min-w-[720px"]:not(.hs-dropdown-open) {
+      transform: translateY(-8px) scale(0.95) !important;
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .hs-dropdown-open .hs-dropdown-menu.start-0,
+    .hs-dropdown-open .hs-dropdown-menu[class*="min-w-[500px"],
+    .hs-dropdown-open .hs-dropdown-menu[class*="min-w-[600px"],
+    .hs-dropdown-open .hs-dropdown-menu[class*="min-w-[720px"] {
+      transform: translateY(0) scale(1) !important;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  /* Enhanced mobile navigation styles */
+  @media (max-width: 767px) {
+    /* Reset positioning for mobile - use static positioning */
+    .hs-dropdown-menu {
+      position: static !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      border-radius: 0.75rem !important;
+      margin-top: 0.5rem !important;
+      transform: none !important;
+      z-index: auto !important;
+    }
+    
+    /* Improve touch targets */
+    .hs-dropdown button {
+      min-height: 44px;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+    
+    .hs-dropdown-menu a {
+      min-height: 44px;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+    
+    /* Smooth animations for mobile */
+    .hs-dropdown-menu {
+      transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out;
+      max-height: 0;
+      overflow: hidden;
+    }
+    
+    .hs-dropdown-open .hs-dropdown-menu {
+      max-height: 500px;
+      opacity: 1;
+    }
+    
+    /* Improve mega menu layout on mobile */
+    .hs-dropdown-menu .md\\:grid {
+      display: block !important;
+    }
+    
+    .hs-dropdown-menu .md\\:grid > div {
+      margin-bottom: 1rem;
+    }
+    
+    .hs-dropdown-menu .md\\:grid > div:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  /* Global dropdown improvements */
+  
+  /* Improve chevron rotation animation */
+  .hs-dropdown button svg {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Enhanced focus styles for better accessibility */
+  .hs-dropdown button:focus-visible {
+    outline: 2px solid rgb(var(--color-brand-400));
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+  }
+  
+  .hs-dropdown-menu a:focus-visible {
+    outline: 2px solid rgb(var(--color-brand-400));
+    outline-offset: -2px;
+    border-radius: 0.375rem;
+  }
+  
+  /* Ensure dropdowns don't interfere with other elements */
+  .hs-dropdown-menu {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Dark mode shadow adjustments */
+  .dark .hs-dropdown-menu {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Prevent layout shift during dropdown animations */
+  .hs-dropdown {
+    contain: layout;
+  }
+  
+  /* Responsive breakpoint adjustments */
+  @media (min-width: 1024px) {
+    /* Larger mega menus on larger screens */
+    .hs-dropdown-menu[class*="min-w-[720px"] {
+      min-width: 800px;
+    }
+    
+    .hs-dropdown-menu[class*="min-w-[600px"] {
+      min-width: 650px;
+    }
+    
+    .hs-dropdown-menu[class*="min-w-[500px"] {
+      min-width: 550px;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    /* Even larger mega menus on xl screens */
+    .hs-dropdown-menu[class*="min-w-[720px"] {
+      min-width: 900px;
+    }
+    
+    .hs-dropdown-menu[class*="min-w-[600px"] {
+      min-width: 700px;
+    }
+  }
+</style>
